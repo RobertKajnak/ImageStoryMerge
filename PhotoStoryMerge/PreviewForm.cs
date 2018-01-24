@@ -47,23 +47,41 @@ namespace PhotoStoryMerge
             int H = Screen.PrimaryScreen.Bounds.Height;
             int w = pictureBox.Size.Width;
             int h = pictureBox.Size.Height;
-            if (w < W * .8)
+            double p = 0.85; // maximum percentage available
+            if (w < W * p)
             {
-                this.Width = w + 20;
+                 changeWidth(w + 20);
             }
             else
             {
-                this.Width = Convert.ToInt16(w * 0.8);
+                changeWidth( Convert.ToInt16(W * p));
             }
 
-            if (h < H * .8)
+            if (h < H * p)
             {
-                this.Height = h + 20;
+                changeHeight( h + 20);
             }
             else
             {
-                this.Height = Convert.ToInt16(h * .8);
+                changeHeight( Convert.ToInt16(H * p));
             }
+        }
+
+        private void changeWidth(int newWidth)
+        {
+            this.Width = newWidth;
+            flowLayoutPanel.Width = newWidth-17;
+        }
+        private void changeHeight(int newHeight)
+        {
+            this.Height = newHeight;
+            flowLayoutPanel.Height = newHeight - menuStrip.Height-42;
+        }
+
+        private void PreviewForm_Resize(object sender, EventArgs e)
+        {
+            changeHeight(this.Height);
+            changeWidth(this.Width);
         }
     }
     
