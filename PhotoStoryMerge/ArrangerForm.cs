@@ -12,15 +12,14 @@ namespace PhotoStoryMerge
 {
     public partial class ArrangerForm : Form
     {
-        List<PictureBox> pictureBoxes;
+        System.Windows.Forms.Control.ControlCollection pictureBoxes;
         PictureBox selectedPictureBox;
-        bool isControlPressed = false;
+        //bool isControlPressed = false;
 
         public ArrangerForm()
         {
             InitializeComponent();
-            //pictureBoxes = this.flowLayoutPanelMain.Controls;
-            pictureBoxes = new List<PictureBox>();
+            pictureBoxes = this.flowLayoutPanelMain.Controls;
         }
 
         private void Form1_DragDrop(object sender, DragEventArgs e)
@@ -68,8 +67,12 @@ namespace PhotoStoryMerge
         {
             switch (e.KeyCode)
             {
-                case (Keys.Control):
+                /*case (Keys.Control):
                     isControlPressed = true;
+                    break;*/
+                case (Keys.Left):
+                    if (selectedPictureBox != null)
+                        moveItemLeft();
                     break;
                 case (Keys.Right):
                     if (selectedPictureBox != null)
@@ -84,14 +87,13 @@ namespace PhotoStoryMerge
 
             switch (e.KeyCode)
             {
-                case (Keys.Control):
+                /*case (Keys.Control):
                     isControlPressed = false;
-                    break;
+                    break;*/
                 case (Keys.Delete):
                     //intentional fallthrough
                 case (Keys.Back):
                     pictureBoxes.Remove(selectedPictureBox);
-                    flowLayoutPanelMain.Controls.Remove(selectedPictureBox);
                     selectedPictureBox = null;
                     if (this.pictureBoxes.Count == 0)
                     {
@@ -130,13 +132,23 @@ namespace PhotoStoryMerge
             pictureBox.Click += new System.EventHandler(this.pictureBox_Click);
 
             pictureBox.Image = image;
-
-            flowLayoutPanelMain.Controls.Add(pictureBox);
+            
             pictureBoxes.Add(pictureBox);
             
             this.flowLayoutPanelMain.ResumeLayout(false);
 
             return pictureBox;
+        }
+        private void moveItemLeft()
+        {
+            if (selectedPictureBox != null)
+            {
+                int ind = pictureBoxes.IndexOf(selectedPictureBox);
+                if (ind > 0)
+                {
+                    pictureBoxes.SetChildIndex(selectedPictureBox, ind - 1);
+                }
+            }
         }
 
         private void moveItemRight()
@@ -146,11 +158,7 @@ namespace PhotoStoryMerge
                 int ind = pictureBoxes.IndexOf(selectedPictureBox);
                 if (ind < pictureBoxes.Count)
                 {
-                    pictureBoxes[ind] = pictureBoxes[ind + 1];
-                    pictureBoxes[ind + 1] = selectedPictureBox;
-
-                    flowLayoutPanelMain.Controls.SetChildIndex(selectedPictureBox, ind + 1);
-                    ///TODO -- maybe this is not the safest method to do it, but it is assumed that the two lists are synced
+                    pictureBoxes.SetChildIndex(selectedPictureBox, ind + 1);
                 }
             }
         }
@@ -196,8 +204,9 @@ namespace PhotoStoryMerge
         private Image generateMergedImage()
         {
             int W =0, H = 0;
-            foreach (PictureBox pb in pictureBoxes)
+            foreach (var v in pictureBoxes)
             {
+                PictureBox pb = (PictureBox)v;
                 H += pb.Image.Height;
                 W = Math.Max(pb.Image.Width, W);
             }
@@ -210,8 +219,9 @@ namespace PhotoStoryMerge
                 ///for zooming and rotation
                 canvas.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 int totalH = 0;
-                foreach (PictureBox pb in pictureBoxes)
+                foreach (var v in pictureBoxes)
                 {
+                    PictureBox pb = (PictureBox)v;
                     Image im = pb.Image;
                     int h = im.Height;
                     int w = im.Width==W?0:(W-im.Width)/2;
