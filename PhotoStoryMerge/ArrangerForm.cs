@@ -14,10 +14,12 @@ namespace PhotoStoryMerge
     {
         List<PictureBox> pictureBoxes;
         PictureBox selectedPictureBox;
+        bool isControlPressed = false;
 
         public ArrangerForm()
         {
             InitializeComponent();
+            //pictureBoxes = this.flowLayoutPanelMain.Controls;
             pictureBoxes = new List<PictureBox>();
         }
 
@@ -62,6 +64,19 @@ namespace PhotoStoryMerge
                     break;
             }
         }
+        private void ArrangerForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case (Keys.Control):
+                    isControlPressed = true;
+                    break;
+                case (Keys.Right):
+                    if (selectedPictureBox != null)
+                        moveItemRight();
+                    break;
+            }
+        }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
@@ -69,6 +84,9 @@ namespace PhotoStoryMerge
 
             switch (e.KeyCode)
             {
+                case (Keys.Control):
+                    isControlPressed = false;
+                    break;
                 case (Keys.Delete):
                     //intentional fallthrough
                 case (Keys.Back):
@@ -119,6 +137,22 @@ namespace PhotoStoryMerge
             this.flowLayoutPanelMain.ResumeLayout(false);
 
             return pictureBox;
+        }
+
+        private void moveItemRight()
+        {
+            if (selectedPictureBox != null)
+            {
+                int ind = pictureBoxes.IndexOf(selectedPictureBox);
+                if (ind < pictureBoxes.Count)
+                {
+                    pictureBoxes[ind] = pictureBoxes[ind + 1];
+                    pictureBoxes[ind + 1] = selectedPictureBox;
+
+                    flowLayoutPanelMain.Controls.SetChildIndex(selectedPictureBox, ind + 1);
+                    ///TODO -- maybe this is not the safest method to do it, but it is assumed that the two lists are synced
+                }
+            }
         }
 
         private void Form1_Resize(object sender, EventArgs e)
@@ -191,5 +225,7 @@ namespace PhotoStoryMerge
             return merged;
 
         }
+
+
     }
 }
