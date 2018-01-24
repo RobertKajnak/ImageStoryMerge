@@ -23,7 +23,7 @@ namespace PhotoStoryMerge
 
         private void Form1_DragDrop(object sender, DragEventArgs e)
         {
-
+            
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -36,14 +36,17 @@ namespace PhotoStoryMerge
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
             // Set filter options and filter index.
-            openFileDialog1.Filter = "JPG Image Files|*.jpg|PNG Image Files|*.png|TIFF Image Files|*.tiff|Icon|*.ico|All Files (*.*)|*.*";
+            openFileDialog1.Filter = "All Files (*.*)|*.*|JPG Image Files|*.jpg|PNG Image Files|*.png|TIFF Image Files|*.tiff|Icon|*.ico";
             openFileDialog1.FilterIndex = 1;
-            openFileDialog1.Multiselect = false;
+            openFileDialog1.Multiselect = true;
 
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                Image image = Image.FromFile(openFileDialog1.FileName);
-                addPictureBox(image);
+                foreach (string filename in openFileDialog1.FileNames)
+                {
+                    Image image = Image.FromFile(filename);
+                    addPictureBox(image);
+                }
             }
         }
 
@@ -151,8 +154,42 @@ namespace PhotoStoryMerge
             }
             else
             {
-                new PreviewForm(pictureBoxes[0].Image).Show();
+                //new PreviewForm(pictureBoxes[0].Image).Show();
+                new PreviewForm(generateMergedImage()).Show();
             }
+        }
+        
+        private Image generateMergedImage()
+        {
+            int W =0, H = 0;
+            foreach (PictureBox pb in pictureBoxes)
+            {
+                H += pb.Image.Height;
+                W = Math.Max(pb.Image.Width, W);
+            }
+
+            //create image
+            var merged = new Bitmap(W, H);
+
+            using (var canvas = Graphics.FromImage(merged))
+            {
+                ///for zooming and rotation
+                canvas.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                int totalH = 0;
+                foreach (PictureBox pb in pictureBoxes)
+                {
+                    Image im = pb.Image;
+                    int h = im.Height;
+                    int w = im.Width==W?0:(W-im.Width)/2;
+
+                    canvas.DrawImage(im, w, totalH);
+                    totalH += h;
+                }
+                canvas.Save();
+            }
+
+            return merged;
+
         }
     }
 }
