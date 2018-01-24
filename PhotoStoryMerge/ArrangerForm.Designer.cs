@@ -37,6 +37,8 @@
             this.generateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.labelHelp = new System.Windows.Forms.Label();
+            this.moveLeftLeftArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveRightRightArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -64,29 +66,32 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.openToolStripMenuItem.Text = "Open";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
+            this.openToolStripMenuItem.Text = "Open (Double Click Empty Region)";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.closeToolStripMenuItem.Text = "Close";
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
+            this.closeToolStripMenuItem.Text = "Close (Escape)";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
             // orderToolStripMenuItem
             // 
             this.orderToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.moveLeftLeftArrowToolStripMenuItem,
+            this.moveRightRightArrowToolStripMenuItem,
             this.invertOrderToolStripMenuItem});
             this.orderToolStripMenuItem.Name = "orderToolStripMenuItem";
             this.orderToolStripMenuItem.Size = new System.Drawing.Size(49, 20);
             this.orderToolStripMenuItem.Text = "Order";
+            this.orderToolStripMenuItem.Click += new System.EventHandler(this.orderToolStripMenuItem_Click);
             // 
             // invertOrderToolStripMenuItem
             // 
             this.invertOrderToolStripMenuItem.Name = "invertOrderToolStripMenuItem";
-            this.invertOrderToolStripMenuItem.Size = new System.Drawing.Size(137, 22);
+            this.invertOrderToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
             this.invertOrderToolStripMenuItem.Text = "Invert Order";
             // 
             // generateToolStripMenuItem
@@ -115,6 +120,22 @@
             this.labelHelp.Size = new System.Drawing.Size(624, 31);
             this.labelHelp.TabIndex = 1;
             this.labelHelp.Text = "Add a picture by double-clicking in an empty region";
+            // 
+            // moveLeftLeftArrowToolStripMenuItem
+            // 
+            this.moveLeftLeftArrowToolStripMenuItem.Enabled = false;
+            this.moveLeftLeftArrowToolStripMenuItem.Name = "moveLeftLeftArrowToolStripMenuItem";
+            this.moveLeftLeftArrowToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.moveLeftLeftArrowToolStripMenuItem.Text = "Move Left (Left Arrow)";
+            this.moveLeftLeftArrowToolStripMenuItem.Click += new System.EventHandler(this.moveLeftLeftArrowToolStripMenuItem_Click);
+            // 
+            // moveRightRightArrowToolStripMenuItem
+            // 
+            this.moveRightRightArrowToolStripMenuItem.Enabled = false;
+            this.moveRightRightArrowToolStripMenuItem.Name = "moveRightRightArrowToolStripMenuItem";
+            this.moveRightRightArrowToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.moveRightRightArrowToolStripMenuItem.Text = "Move Right (Right Arrow)";
+            this.moveRightRightArrowToolStripMenuItem.Click += new System.EventHandler(this.moveRightRightArrowToolStripMenuItem_Click);
             // 
             // ArrangerForm
             // 
@@ -150,6 +171,8 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelMain;
         private System.Windows.Forms.ToolStripMenuItem generateToolStripMenuItem;
         private System.Windows.Forms.Label labelHelp;
+        private System.Windows.Forms.ToolStripMenuItem moveLeftLeftArrowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moveRightRightArrowToolStripMenuItem;
     }
 }
 

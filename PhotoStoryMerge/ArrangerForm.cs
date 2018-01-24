@@ -236,6 +236,28 @@ namespace PhotoStoryMerge
 
         }
 
+        private void moveLeftLeftArrowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            moveItemLeft();
+        }
 
+        private void moveRightRightArrowToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            moveItemRight();
+        }
+
+        private void orderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (selectedPictureBox == null)
+            {
+                moveLeftLeftArrowToolStripMenuItem.Enabled = false;
+                moveRightRightArrowToolStripMenuItem.Enabled = false;
+            }
+            else
+            {
+                moveLeftLeftArrowToolStripMenuItem.Enabled = true;
+                moveRightRightArrowToolStripMenuItem.Enabled = true;
+            }
+        }
     }
 }
