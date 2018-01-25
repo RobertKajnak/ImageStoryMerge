@@ -113,7 +113,8 @@
             // 
             this.invertOrderToolStripMenuItem.Name = "invertOrderToolStripMenuItem";
             this.invertOrderToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.invertOrderToolStripMenuItem.Text = "Invert Order";
+            this.invertOrderToolStripMenuItem.Text = "Invert Order (i)";
+            this.invertOrderToolStripMenuItem.Click += new System.EventHandler(this.invertOrderToolStripMenuItem_Click);
             // 
             // generateToolStripMenuItem
             // 

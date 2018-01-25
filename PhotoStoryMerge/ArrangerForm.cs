@@ -82,6 +82,9 @@ namespace PhotoStoryMerge
         {
             switch (e.KeyCode)
             {
+                case (Keys.I):
+                    invertOrderToolStripMenuItem_Click(sender, e);
+                    break;
                 case (Keys.V):
                     if (isControlPressed)
                     {
@@ -315,6 +318,14 @@ namespace PhotoStoryMerge
                         Console.WriteLine("Text does not leat do a valid image file");
                     }
                 }
+            }
+        }
+
+        private void invertOrderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < pictureBoxes.Count-2; i++)
+            {
+                pictureBoxes.SetChildIndex(pictureBoxes[pictureBoxes.Count -1], i);
             }
         }
     }
