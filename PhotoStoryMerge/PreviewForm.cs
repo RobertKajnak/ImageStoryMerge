@@ -13,6 +13,8 @@ namespace PhotoStoryMerge
 {
     public partial class PreviewForm : Form
     {
+        bool isControlPressed = false;
+
         public PreviewForm(Image image)
         {
             InitializeComponent();
@@ -50,17 +52,6 @@ namespace PhotoStoryMerge
             this.Close();
         }
 
-        private void PreviewForm_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            //orderToolStripMenuItem.Text = "" +(int)e.KeyChar;
-            switch (e.KeyChar)
-            {
-                case ((char)27):
-                    this.Dispose();
-                    this.Close();
-                    break;
-            }
-        }
 
         private void pictureBox1_Resize(object sender, EventArgs e)
         {
@@ -103,6 +94,43 @@ namespace PhotoStoryMerge
         {
             changeHeight(this.Height);
             changeWidth(this.Width);
+        }
+
+        private void PreviewForm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            //orderToolStripMenuItem.Text = "" +(int)e.KeyChar;
+            switch (e.KeyChar)
+            {
+                case ((char)27):
+                    this.Dispose();
+                    this.Close();
+                    break;
+            }
+        }
+
+        private void PreviewForm_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case (Keys.S):
+                case (Keys.Enter):
+                    if (isControlPressed)
+                        saveToolStripMenuItem_Click(sender, e);
+                    break;
+                case (Keys.ControlKey):
+                    isControlPressed = true;
+                    break;
+            }
+        }
+
+        private void PreviewForm_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case (Keys.ControlKey):
+                    isControlPressed = false;
+                    break;
+            }
         }
     }
     

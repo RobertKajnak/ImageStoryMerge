@@ -14,7 +14,7 @@ namespace PhotoStoryMerge
     {
         System.Windows.Forms.Control.ControlCollection pictureBoxes;
         PictureBox selectedPictureBox;
-        //bool isControlPressed = false;
+        bool isControlPressed = false;
 
         public ArrangerForm()
         {
@@ -82,9 +82,18 @@ namespace PhotoStoryMerge
         {
             switch (e.KeyCode)
             {
-                /*case (Keys.Control):
+                case (Keys.V):
+                    if (isControlPressed)
+                    {
+                        pasteCtrlVToolStripMenuItem_Click(sender, e);
+                    }
+                    break;
+                case (Keys.ControlKey):
                     isControlPressed = true;
-                    break;*/
+                    break;
+                case (Keys.Enter):
+                    generateToolStripMenuItem_Click(sender, e);
+                    break;
                 case (Keys.Left):
                     if (selectedPictureBox != null)
                         moveItemLeft();
@@ -102,9 +111,9 @@ namespace PhotoStoryMerge
 
             switch (e.KeyCode)
             {
-                /*case (Keys.Control):
+                case (Keys.ControlKey):
                     isControlPressed = false;
-                    break;*/
+                    break;
                 case (Keys.Delete):
                     //intentional fallthrough
                 case (Keys.Back):
@@ -281,6 +290,31 @@ namespace PhotoStoryMerge
             {
                 selectedPictureBox.BackColor = SystemColors.Control;
                 selectedPictureBox = null;
+            }
+        }
+
+        private void pasteCtrlVToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IDataObject iData = Clipboard.GetDataObject();
+            if (iData.GetDataPresent(DataFormats.Bitmap))
+            {
+
+                addPictureBox(Clipboard.GetImage());
+            }
+
+            if (iData.GetDataPresent(DataFormats.FileDrop))
+            {
+                foreach (var v in Clipboard.GetFileDropList())
+                {
+                    try
+                    {
+                        addPictureBox(Image.FromFile(v));
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Text does not leat do a valid image file");
+                    }
+                }
             }
         }
     }

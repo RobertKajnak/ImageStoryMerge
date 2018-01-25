@@ -92,7 +92,9 @@
             this.MainMenuStrip = this.menuStrip;
             this.Name = "PreviewForm";
             this.Text = "Preview";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PreviewForm_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PreviewForm_KeyPress);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.PreviewForm_KeyUp);
             this.Resize += new System.EventHandler(this.PreviewForm_Resize);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
