@@ -33,17 +33,18 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveLeftLeftArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moveRightRightArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.invertOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.moveLeftLeftArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.moveRightRightArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
             // 
+            this.menuStrip1.AllowDrop = true;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.orderToolStripMenuItem,
@@ -53,6 +54,8 @@
             this.menuStrip1.Size = new System.Drawing.Size(684, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
+            this.menuStrip1.DragDrop += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragDrop);
+            this.menuStrip1.DragEnter += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragEnter);
             // 
             // fileToolStripMenuItem
             // 
@@ -88,39 +91,6 @@
             this.orderToolStripMenuItem.Text = "Order";
             this.orderToolStripMenuItem.Click += new System.EventHandler(this.orderToolStripMenuItem_Click);
             // 
-            // invertOrderToolStripMenuItem
-            // 
-            this.invertOrderToolStripMenuItem.Name = "invertOrderToolStripMenuItem";
-            this.invertOrderToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
-            this.invertOrderToolStripMenuItem.Text = "Invert Order";
-            // 
-            // generateToolStripMenuItem
-            // 
-            this.generateToolStripMenuItem.Name = "generateToolStripMenuItem";
-            this.generateToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
-            this.generateToolStripMenuItem.Text = "Generate!";
-            this.generateToolStripMenuItem.Click += new System.EventHandler(this.generateToolStripMenuItem_Click);
-            // 
-            // flowLayoutPanelMain
-            // 
-            this.flowLayoutPanelMain.AutoScroll = true;
-            this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 27);
-            this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
-            this.flowLayoutPanelMain.Size = new System.Drawing.Size(684, 414);
-            this.flowLayoutPanelMain.TabIndex = 1;
-            this.flowLayoutPanelMain.DoubleClick += new System.EventHandler(this.flowLayoutPanel1_DoubleClick);
-            // 
-            // labelHelp
-            // 
-            this.labelHelp.AutoSize = true;
-            this.labelHelp.Enabled = false;
-            this.labelHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.labelHelp.Location = new System.Drawing.Point(3, 166);
-            this.labelHelp.Name = "labelHelp";
-            this.labelHelp.Size = new System.Drawing.Size(624, 31);
-            this.labelHelp.TabIndex = 1;
-            this.labelHelp.Text = "Add a picture by double-clicking in an empty region";
-            // 
             // moveLeftLeftArrowToolStripMenuItem
             // 
             this.moveLeftLeftArrowToolStripMenuItem.Enabled = false;
@@ -137,8 +107,45 @@
             this.moveRightRightArrowToolStripMenuItem.Text = "Move Right (Right Arrow)";
             this.moveRightRightArrowToolStripMenuItem.Click += new System.EventHandler(this.moveRightRightArrowToolStripMenuItem_Click);
             // 
+            // invertOrderToolStripMenuItem
+            // 
+            this.invertOrderToolStripMenuItem.Name = "invertOrderToolStripMenuItem";
+            this.invertOrderToolStripMenuItem.Size = new System.Drawing.Size(209, 22);
+            this.invertOrderToolStripMenuItem.Text = "Invert Order";
+            // 
+            // generateToolStripMenuItem
+            // 
+            this.generateToolStripMenuItem.Name = "generateToolStripMenuItem";
+            this.generateToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
+            this.generateToolStripMenuItem.Text = "Generate!";
+            this.generateToolStripMenuItem.Click += new System.EventHandler(this.generateToolStripMenuItem_Click);
+            // 
+            // flowLayoutPanelMain
+            // 
+            this.flowLayoutPanelMain.AllowDrop = true;
+            this.flowLayoutPanelMain.AutoScroll = true;
+            this.flowLayoutPanelMain.Location = new System.Drawing.Point(0, 27);
+            this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(684, 414);
+            this.flowLayoutPanelMain.TabIndex = 1;
+            this.flowLayoutPanelMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragDrop);
+            this.flowLayoutPanelMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragEnter);
+            this.flowLayoutPanelMain.DoubleClick += new System.EventHandler(this.flowLayoutPanel1_DoubleClick);
+            // 
+            // labelHelp
+            // 
+            this.labelHelp.AutoSize = true;
+            this.labelHelp.Enabled = false;
+            this.labelHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.labelHelp.Location = new System.Drawing.Point(3, 166);
+            this.labelHelp.Name = "labelHelp";
+            this.labelHelp.Size = new System.Drawing.Size(624, 31);
+            this.labelHelp.TabIndex = 1;
+            this.labelHelp.Text = "Add a picture by double-clicking in an empty region";
+            // 
             // ArrangerForm
             // 
+            this.AllowDrop = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(684, 441);
             this.Controls.Add(this.labelHelp);
@@ -148,7 +155,8 @@
             this.Name = "ArrangerForm";
             this.Text = "Create a Picture Story";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragEnter);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ArrangerForm_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Form1_KeyPress);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);

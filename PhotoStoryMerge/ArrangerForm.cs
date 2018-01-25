@@ -22,9 +22,24 @@ namespace PhotoStoryMerge
             pictureBoxes = this.flowLayoutPanelMain.Controls;
         }
 
-        private void Form1_DragDrop(object sender, DragEventArgs e)
+        private void ArrangerForm_DragEnter(object sender, DragEventArgs e)
         {
-            
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+        }
+
+        private void ArrangerForm_DragDrop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files)
+                try
+                {
+                    addPictureBox(Image.FromFile(file)); 
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -259,5 +274,7 @@ namespace PhotoStoryMerge
                 moveRightRightArrowToolStripMenuItem.Enabled = true;
             }
         }
+
+
     }
 }
