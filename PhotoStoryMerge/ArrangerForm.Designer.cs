@@ -128,6 +128,7 @@
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
             this.flowLayoutPanelMain.Size = new System.Drawing.Size(684, 414);
             this.flowLayoutPanelMain.TabIndex = 1;
+            this.flowLayoutPanelMain.Click += new System.EventHandler(this.flowLayoutPanelMain_Click);
             this.flowLayoutPanelMain.DragDrop += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragDrop);
             this.flowLayoutPanelMain.DragEnter += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragEnter);
             this.flowLayoutPanelMain.DoubleClick += new System.EventHandler(this.flowLayoutPanel1_DoubleClick);

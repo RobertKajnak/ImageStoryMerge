@@ -190,7 +190,7 @@ namespace PhotoStoryMerge
                 selectedPictureBox.BackColor = SystemColors.Control;
             }
             selectedPictureBox = ((PictureBox)sender);
-            selectedPictureBox.BackColor = Color.Aqua;
+            selectedPictureBox.BackColor = Color.CadetBlue;
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
@@ -275,6 +275,13 @@ namespace PhotoStoryMerge
             }
         }
 
-
+        private void flowLayoutPanelMain_Click(object sender, EventArgs e)
+        {
+            if (selectedPictureBox != null)
+            {
+                selectedPictureBox.BackColor = SystemColors.Control;
+                selectedPictureBox = null;
+            }
+        }
     }
 }
