@@ -31,8 +31,6 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scaleDownBy25ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.scaleToCurrentZoomLevellevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.zoomOutCtrlScrollUpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,6 +40,8 @@
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pictureBox = new System.Windows.Forms.PictureBox();
             this.flowLayoutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.scaleToXToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetScalingRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).BeginInit();
             this.flowLayoutPanel.SuspendLayout();
@@ -70,30 +70,20 @@
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.sToolStripMenuItem,
-            this.scaleDownBy25ToolStripMenuItem,
-            this.scaleToCurrentZoomLevellevelToolStripMenuItem});
+            this.scaleToCurrentZoomLevellevelToolStripMenuItem,
+            this.scaleToXToolStripMenuItem,
+            this.resetScalingRToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
-            // 
-            // sToolStripMenuItem
-            // 
-            this.sToolStripMenuItem.Name = "sToolStripMenuItem";
-            this.sToolStripMenuItem.Size = new System.Drawing.Size(267, 22);
-            this.sToolStripMenuItem.Text = "Scale Up by 25%";
-            // 
-            // scaleDownBy25ToolStripMenuItem
-            // 
-            this.scaleDownBy25ToolStripMenuItem.Name = "scaleDownBy25ToolStripMenuItem";
-            this.scaleDownBy25ToolStripMenuItem.Size = new System.Drawing.Size(267, 22);
-            this.scaleDownBy25ToolStripMenuItem.Text = "Scale Down by 25%";
+            this.editToolStripMenuItem.Click += new System.EventHandler(this.editToolStripMenuItem_Click);
             // 
             // scaleToCurrentZoomLevellevelToolStripMenuItem
             // 
             this.scaleToCurrentZoomLevellevelToolStripMenuItem.Name = "scaleToCurrentZoomLevellevelToolStripMenuItem";
-            this.scaleToCurrentZoomLevellevelToolStripMenuItem.Size = new System.Drawing.Size(267, 22);
-            this.scaleToCurrentZoomLevellevelToolStripMenuItem.Text = "Scale to current zoom level (<level>)";
+            this.scaleToCurrentZoomLevellevelToolStripMenuItem.Size = new System.Drawing.Size(289, 22);
+            this.scaleToCurrentZoomLevellevelToolStripMenuItem.Text = "Scale to current zoom level (C) (100.00%)";
+            this.scaleToCurrentZoomLevellevelToolStripMenuItem.Click += new System.EventHandler(this.scaleToCurrentZoomLevellevelToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -166,6 +156,20 @@
             this.flowLayoutPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.flowLayoutPanel_MouseClick);
             this.flowLayoutPanel.MouseWheel += new System.Windows.Forms.MouseEventHandler(this.PreviewForm_MouseWheel);
             // 
+            // scaleToXToolStripMenuItem
+            // 
+            this.scaleToXToolStripMenuItem.Name = "scaleToXToolStripMenuItem";
+            this.scaleToXToolStripMenuItem.Size = new System.Drawing.Size(267, 22);
+            this.scaleToXToolStripMenuItem.Text = "Scale to ... (X)";
+            this.scaleToXToolStripMenuItem.Click += new System.EventHandler(this.scaleToXToolStripMenuItem_Click);
+            // 
+            // resetScalingRToolStripMenuItem
+            // 
+            this.resetScalingRToolStripMenuItem.Name = "resetScalingRToolStripMenuItem";
+            this.resetScalingRToolStripMenuItem.Size = new System.Drawing.Size(267, 22);
+            this.resetScalingRToolStripMenuItem.Text = "Reset Scaling (R)";
+            this.resetScalingRToolStripMenuItem.Click += new System.EventHandler(this.resetScalingRToolStripMenuItem_Click);
+            // 
             // PreviewForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -200,10 +204,10 @@
         private System.Windows.Forms.ToolStripMenuItem zoomOutCtrlScrollUpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zoomInCtrlScrollUpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem sToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem scaleDownBy25ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem scaleToCurrentZoomLevellevelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem zoomToToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resetZoomToActualSizeCtrlMiddleClickToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem scaleToXToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resetScalingRToolStripMenuItem;
     }
 }

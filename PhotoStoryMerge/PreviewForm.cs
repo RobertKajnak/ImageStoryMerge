@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -15,6 +17,7 @@ namespace PhotoStoryMerge
     {
         bool isControlPressed = false;
         Size originalSize;
+        Image originalImage;
 
         // maximum percentage available of screen resolution on resize
         double p = 0.85; 
@@ -23,6 +26,7 @@ namespace PhotoStoryMerge
         {
             InitializeComponent();
             pictureBox.Image = image;
+            originalImage = (Image)image.Clone();
 
             ///this is relevant for the zooming, but not resizing section
             ///<see cref="zoomInCtrlScrollUpToolStripMenuItem_Click(object, EventArgs)"/>
@@ -149,6 +153,15 @@ namespace PhotoStoryMerge
         {
             switch (e.KeyCode)
             {
+                case (Keys.C):
+                    scaleToCurrentZoomLevellevelToolStripMenuItem_Click(sender, e);
+                    break;
+                case (Keys.X):
+                    scaleToXToolStripMenuItem_Click(sender, e);
+                    break;
+                case (Keys.R):
+                    resetScalingRToolStripMenuItem_Click(sender, e);
+                    break;
                 case (Keys.Z):
                     zoomToToolStripMenuItem_Click(sender,e);
                     break;
@@ -173,7 +186,6 @@ namespace PhotoStoryMerge
             }
         }
         ///TODO fix annoying thing with srollbars when zooming
-        ///TODO add resize functionality
         ///TODO fix bug with background.png
         private void zoomOutCtrlScrollUpToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -266,22 +278,20 @@ namespace PhotoStoryMerge
 
         private void zoomToToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string zoom = Prompt.ShowDialog("Set zoom to (%):", "Custom Zoom");
-            setZoomTo(Double.Parse(zoom)/100, true);
+            string zoom = Prompt.ShowDialog("Set zoom to (%):", "Zoom");
+            try
+            {
+                setZoomTo(Double.Parse(zoom) / 100, true);
+            }
+            catch
+            {
+
+            }
         }
 
         private void resetZoomToActualSizeCtrlMiddleClickToolStripMenuItem_Click(object sender, EventArgs e)
         {
             setZoomTo(1, true);
-        }
-        private void scaleUpToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void flowLayoutPanel_Scroll(object sender, ScrollEventArgs e)
-        {
-
         }
 
         private void flowLayoutPanel_MouseClick(object sender, MouseEventArgs e)
@@ -299,15 +309,15 @@ namespace PhotoStoryMerge
             {
                 Form prompt = new Form()
                 {
-                    Width = 500,
+                    Width = 210,
                     Height = 150,
                     FormBorderStyle = FormBorderStyle.FixedDialog,
                     Text = caption,
                     StartPosition = FormStartPosition.CenterScreen
                 };
                 Label textLabel = new Label() { Left = 50, Top = 20, Text = text };
-                TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400 };
-                Button confirmation = new Button() { Text = "Ok", Left = 350, Width = 100, Top = 70, DialogResult = DialogResult.OK };
+                TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 100 };
+                Button confirmation = new Button() { Text = "Ok", Left = 75, Width = 50, Top = 70, DialogResult = DialogResult.OK };
                 confirmation.Click += (sender, e) => { prompt.Close(); };
                 prompt.Controls.Add(textBox);
                 prompt.Controls.Add(confirmation);
@@ -316,6 +326,92 @@ namespace PhotoStoryMerge
 
                 return prompt.ShowDialog() == DialogResult.OK ? textBox.Text : "";
             }
+        }
+
+        private void scaleToCurrentZoomLevellevelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                pictureBox.Image = (Image)ResizeImage(pictureBox.Image, pictureBox.Width, pictureBox.Height);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("The size may be to large", "Error rescaling the image");
+            }
+        }
+
+        private void scaleToXToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            double newZoom = 1;
+            Double.TryParse(Prompt.ShowDialog("Scale Image to (%)", "Rescale"),out newZoom);
+            try
+            {
+                int newW = Convert.ToInt32(originalImage.Width * newZoom / 100);
+                int newH = Convert.ToInt32(originalImage.Height * newZoom / 100);
+                if (newH < 100 || newW < 100)
+                {
+                    MessageBox.Show("The value entered is too small", "Error rescaling the image");
+                }
+                else
+                {
+                    try
+                    {
+                        pictureBox.Image = (Image)ResizeImage(pictureBox.Image, newW, newH);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("The size may be to large", "Error rescaling the image");
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void resetScalingRToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pictureBox.Image = (Image)originalImage.Clone();
+        }
+        /// <summary>
+        /// Resize the image to the specified width and height.
+        /// </summary>
+        /// <param name="image">The image to resize.</param>
+        /// <param name="width">The width to resize to.</param>
+        /// <param name="height">The height to resize to.</param>
+        /// <returns>The resized image.</returns>
+        /// Curtesy of mpen @ stackoverflow
+        public static Bitmap ResizeImage(Image image, int width, int height)
+        {
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
+
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+
+            return destImage;
+        }
+
+        private void editToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            scaleToCurrentZoomLevellevelToolStripMenuItem.Text = 
+                new Regex(@"\d+\.\d+").Replace(scaleToCurrentZoomLevellevelToolStripMenuItem.Text, 
+                String.Format("{0:0.00}", 100.0 * pictureBox.Size.Width/originalSize.Width) );
         }
     }
 
