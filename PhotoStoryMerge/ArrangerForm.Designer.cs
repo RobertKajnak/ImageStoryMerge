@@ -31,6 +31,7 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pasteCtrlVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveLeftLeftArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -39,7 +40,6 @@
             this.generateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.pasteCtrlVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,6 +74,13 @@
             this.openToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
             this.openToolStripMenuItem.Text = "Open (Double Click Empty Region)";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // pasteCtrlVToolStripMenuItem
+            // 
+            this.pasteCtrlVToolStripMenuItem.Name = "pasteCtrlVToolStripMenuItem";
+            this.pasteCtrlVToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
+            this.pasteCtrlVToolStripMenuItem.Text = "Paste (Ctrl+V)";
+            this.pasteCtrlVToolStripMenuItem.Click += new System.EventHandler(this.pasteCtrlVToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
@@ -140,19 +147,18 @@
             // 
             this.labelHelp.AutoSize = true;
             this.labelHelp.Enabled = false;
-            this.labelHelp.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.labelHelp.Location = new System.Drawing.Point(3, 166);
+            this.labelHelp.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelHelp.Location = new System.Drawing.Point(85, 111);
             this.labelHelp.Name = "labelHelp";
-            this.labelHelp.Size = new System.Drawing.Size(624, 31);
+            this.labelHelp.Size = new System.Drawing.Size(495, 234);
             this.labelHelp.TabIndex = 1;
-            this.labelHelp.Text = "Add a picture by double-clicking in an empty region";
-            // 
-            // pasteCtrlVToolStripMenuItem
-            // 
-            this.pasteCtrlVToolStripMenuItem.Name = "pasteCtrlVToolStripMenuItem";
-            this.pasteCtrlVToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
-            this.pasteCtrlVToolStripMenuItem.Text = "Paste (Ctrl+V)";
-            this.pasteCtrlVToolStripMenuItem.Click += new System.EventHandler(this.pasteCtrlVToolStripMenuItem_Click);
+            this.labelHelp.Text = 
+                "                 Add a picture by:\n"+
+                "Double-clicking in an empty region\n"+
+                "  Pasting a copied image (Ctrl + V)\n"+
+                "(you can paste screenshots as well)\n"+
+                "                             or\n"+
+                "Selecting File>Open from the menu";
             // 
             // ArrangerForm
             // 

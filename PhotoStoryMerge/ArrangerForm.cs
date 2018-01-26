@@ -114,6 +114,9 @@ namespace PhotoStoryMerge
 
             switch (e.KeyCode)
             {
+                case (Keys.I):
+                    invertOrderToolStripMenuItem_Click(sender, e);
+                    break;
                 case (Keys.ControlKey):
                     isControlPressed = false;
                     break;
