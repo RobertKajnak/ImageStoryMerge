@@ -175,7 +175,6 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "ArrangerForm";
             this.Text = "Create a Picture Story";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragEnter);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ArrangerForm_KeyDown);
