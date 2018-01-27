@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArrangerForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,6 +41,7 @@
             this.generateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.labelHelp = new System.Windows.Forms.Label();
+            this.clearWorkspaceCtrlDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,6 +65,7 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.pasteCtrlVToolStripMenuItem,
+            this.clearWorkspaceCtrlDToolStripMenuItem,
             this.closeToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -71,21 +74,21 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
-            this.openToolStripMenuItem.Text = "Open (Double Click Empty Region)";
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.openToolStripMenuItem.Text = "Open (Ctrl + O)";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // pasteCtrlVToolStripMenuItem
             // 
             this.pasteCtrlVToolStripMenuItem.Name = "pasteCtrlVToolStripMenuItem";
-            this.pasteCtrlVToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
+            this.pasteCtrlVToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.pasteCtrlVToolStripMenuItem.Text = "Paste (Ctrl+V)";
             this.pasteCtrlVToolStripMenuItem.Click += new System.EventHandler(this.pasteCtrlVToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(258, 22);
+            this.closeToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.closeToolStripMenuItem.Text = "Close (Escape)";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.closeToolStripMenuItem_Click);
             // 
@@ -148,17 +151,18 @@
             this.labelHelp.AutoSize = true;
             this.labelHelp.Enabled = false;
             this.labelHelp.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelHelp.Location = new System.Drawing.Point(85, 111);
+            this.labelHelp.Location = new System.Drawing.Point(85, 86);
             this.labelHelp.Name = "labelHelp";
-            this.labelHelp.Size = new System.Drawing.Size(495, 234);
+            this.labelHelp.Size = new System.Drawing.Size(478, 273);
             this.labelHelp.TabIndex = 1;
-            this.labelHelp.Text = 
-                "                 Add a picture by:\n"+
-                "Double-clicking in an empty region\n"+
-                "  Pasting a copied image (Ctrl + V)\n"+
-                "(you can paste screenshots as well)\n"+
-                "                             or\n"+
-                "Selecting File>Open from the menu";
+            this.labelHelp.Text = resources.GetString("labelHelp.Text");
+            // 
+            // clearWorkspaceCtrlDToolStripMenuItem
+            // 
+            this.clearWorkspaceCtrlDToolStripMenuItem.Name = "clearWorkspaceCtrlDToolStripMenuItem";
+            this.clearWorkspaceCtrlDToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.clearWorkspaceCtrlDToolStripMenuItem.Text = "Clear Workspace (Ctrl+D)";
+            this.clearWorkspaceCtrlDToolStripMenuItem.Click += new System.EventHandler(this.clearWorkspaceCtrlDToolStripMenuItem_Click);
             // 
             // ArrangerForm
             // 
@@ -199,6 +203,7 @@
         private System.Windows.Forms.ToolStripMenuItem moveLeftLeftArrowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem moveRightRightArrowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteCtrlVToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearWorkspaceCtrlDToolStripMenuItem;
     }
 }
 

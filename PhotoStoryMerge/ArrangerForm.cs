@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace PhotoStoryMerge
@@ -82,6 +80,12 @@ namespace PhotoStoryMerge
         {
             switch (e.KeyCode)
             {
+                case (Keys.O):
+                    flowLayoutPanel1_DoubleClick(sender, e);
+                    break;
+                case (Keys.D):
+                    clearWorkspaceCtrlDToolStripMenuItem_Click(sender, e);
+                    break;
                 case (Keys.I):
                     invertOrderToolStripMenuItem_Click(sender, e);
                     break;
@@ -105,6 +109,16 @@ namespace PhotoStoryMerge
                     if (selectedPictureBox != null)
                         moveItemRight();
                     break;
+                case (Keys.Delete):
+                //intentional fallthrough
+                case (Keys.Back):
+                    pictureBoxes.Remove(selectedPictureBox);
+                    selectedPictureBox = null;
+                    if (this.pictureBoxes.Count == 0)
+                    {
+                        labelHelp.Visible = true;
+                    }
+                    break;
             }
         }
 
@@ -114,21 +128,8 @@ namespace PhotoStoryMerge
 
             switch (e.KeyCode)
             {
-                case (Keys.I):
-                    invertOrderToolStripMenuItem_Click(sender, e);
-                    break;
                 case (Keys.ControlKey):
                     isControlPressed = false;
-                    break;
-                case (Keys.Delete):
-                    //intentional fallthrough
-                case (Keys.Back):
-                    pictureBoxes.Remove(selectedPictureBox);
-                    selectedPictureBox = null;
-                    if (this.pictureBoxes.Count == 0)
-                    {
-                        labelHelp.Visible = true;
-                    }
                     break;
                 default: break;
             }
@@ -226,7 +227,6 @@ namespace PhotoStoryMerge
             }
             else
             {
-                //new PreviewForm(pictureBoxes[0].Image).Show();
                 new PreviewForm(generateMergedImage()).Show();
             }
         }
@@ -330,6 +330,13 @@ namespace PhotoStoryMerge
             {
                 pictureBoxes.SetChildIndex(pictureBoxes[pictureBoxes.Count -1], i);
             }
+        }
+
+        private void clearWorkspaceCtrlDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            selectedPictureBox = null;
+            pictureBoxes.Clear();
+            labelHelp.Visible = true;
         }
     }
 }
