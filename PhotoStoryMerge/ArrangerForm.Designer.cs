@@ -41,10 +41,11 @@
             this.invertOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ignoreDPIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lockLoadFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -141,7 +142,8 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ignoreDPIToolStripMenuItem});
+            this.ignoreDPIToolStripMenuItem,
+            this.lockLoadFilesToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
@@ -152,8 +154,15 @@
             this.ignoreDPIToolStripMenuItem.CheckOnClick = true;
             this.ignoreDPIToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ignoreDPIToolStripMenuItem.Name = "ignoreDPIToolStripMenuItem";
-            this.ignoreDPIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ignoreDPIToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.ignoreDPIToolStripMenuItem.Text = "IgnoreDPI";
+            // 
+            // lockLoadFilesToolStripMenuItem
+            // 
+            this.lockLoadFilesToolStripMenuItem.CheckOnClick = true;
+            this.lockLoadFilesToolStripMenuItem.Name = "lockLoadFilesToolStripMenuItem";
+            this.lockLoadFilesToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.lockLoadFilesToolStripMenuItem.Text = "Lock-Load Files";
             // 
             // generateToolStripMenuItem
             // 
@@ -161,6 +170,13 @@
             this.generateToolStripMenuItem.Size = new System.Drawing.Size(69, 20);
             this.generateToolStripMenuItem.Text = "Generate!";
             this.generateToolStripMenuItem.Click += new System.EventHandler(this.generateToolStripMenuItem_Click);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+            this.helpToolStripMenuItem.Text = "Help/About";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // flowLayoutPanelMain
             // 
@@ -186,13 +202,6 @@
             this.labelHelp.TabIndex = 1;
             this.labelHelp.Text = resources.GetString("labelHelp.Text");
             // 
-            // helpToolStripMenuItem
-            // 
-            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
-            this.helpToolStripMenuItem.Text = "Help/About";
-            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
-            // 
             // ArrangerForm
             // 
             this.AllowDrop = true;
@@ -201,10 +210,10 @@
             this.Controls.Add(this.labelHelp);
             this.Controls.Add(this.flowLayoutPanelMain);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = global::PhotoStoryMerge.Properties.Resources.PhotoStoryMerge;
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "ArrangerForm";
             this.Text = "Create a Picture Story";
-            this.Icon = ((System.Drawing.Icon)(Properties.Resources.PhotoStoryMerge));
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragEnter);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ArrangerForm_KeyDown);
@@ -236,6 +245,7 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ignoreDPIToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lockLoadFilesToolStripMenuItem;
     }
 }
 

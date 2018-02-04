@@ -14,7 +14,6 @@ namespace PhotoStoryMerge
     public partial class PreviewForm : Form
     {
         ///TODO fix annoying thing with srollbars when zooming
-        ///TODO fix bug with background.png
         bool isControlPressed = false;
         Size originalSize;
         Image originalImage;

@@ -126,6 +126,46 @@ namespace PhotoStoryMerge
             return merged;
 
         }
+         
+        private Image ImageFromFile(string path)
+        {
+            Image image = null;
+            if (lockLoadFilesToolStripMenuItem.Checked)
+            {
+                image = Image.FromFile(path);
+            }
+            else
+            {
+                image = LoadImage(path);
+            }
+            return image;
+        }
+
+        /// <summary>
+        /// Loads the bitmap from file, copies it, than releases the file resource
+        /// </summary>
+        /// <param name="path">Path to the image file</param>
+        /// <returns></returns>
+        static Bitmap LoadImage(string path)
+        {
+            Bitmap img = null;
+
+            using (Bitmap b = new Bitmap(path))
+            {
+                img = new Bitmap(b.Width, b.Height, b.PixelFormat);
+                img.SetResolution(b.HorizontalResolution, b.VerticalResolution);
+                //img.Palette = b.Palette; -- clears the image. Maybe not loaded properly? Oh, well
+                img.Tag = b.Tag;
+                                
+                using (Graphics g = Graphics.FromImage(img))
+                {
+                    g.DrawImage(b, 0,0);
+                    g.Flush();
+                }
+            }
+
+            return img;
+        }
 
         /// <summary>
         /// Creates a copy of the image, but uses the new DPI values
@@ -185,7 +225,7 @@ namespace PhotoStoryMerge
                 {
                     try
                     {
-                        addPictureBox(Image.FromFile(v));
+                        addPictureBox(ImageFromFile(v));
                     }
                     catch
                     {
@@ -199,6 +239,7 @@ namespace PhotoStoryMerge
         {
             selectedPictureBox = null;
             pictureBoxes.Clear();
+            System.GC.Collect();
             labelHelp.Visible = true;
         }
 
@@ -251,7 +292,14 @@ namespace PhotoStoryMerge
 
         private void generateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new PreviewForm(generateMergedImage()).Show();    
+            if (pictureBoxes.Count < 1)
+            {
+                MessageBox.Show("Please add at least one images to merge", "Not enough images");
+            }
+            else
+            {
+                new PreviewForm(generateMergedImage()).Show();
+            }
         }
 
         #endregion
@@ -265,6 +313,10 @@ namespace PhotoStoryMerge
                 "The Ignore DPI feature (on by default) only consideres the resolution of the images on compositing.\n"+
                 "Disabling it will scale the images based on DPI, 1:1 pixel ratio being at 96DPI (value comes from Visual Studio or Microsoft or sthg).\n"+
                 "For example: putting a 182 DPI image with 800*600 pixels will result in an image with 400*300 pixels.\n"+
+                "\n\n"+
+                "\"Lock-Load Files\" locks the added files to the application so they can't be modified externally.\n"+
+                "Might fix some issues with some wierder file configurations, but is usually not necessary"+
+                "Only has effect on files added after changing the option (i.e. does not reload files already inside the application)\n"+
                 "\n\n"+
                 "To report any bugs of issues visit the repo: \n"+
                 "https://github.com/RobertKajnak/ImageStoryMerge";
@@ -290,7 +342,7 @@ namespace PhotoStoryMerge
             {
                 foreach (string filename in openFileDialog1.FileNames)
                 {
-                    Image image = Image.FromFile(filename);
+                    Image image = ImageFromFile(filename);
                     addPictureBox(image);
                 }
             }
@@ -369,6 +421,8 @@ namespace PhotoStoryMerge
                 //intentional fallthrough
                 case (Keys.Back):
                     pictureBoxes.Remove(selectedPictureBox);
+                    selectedPictureBox.Image.Dispose();
+                    selectedPictureBox.Dispose();
                     selectedPictureBox = null;
                     if (this.pictureBoxes.Count == 0)
                     {
@@ -407,7 +461,7 @@ namespace PhotoStoryMerge
             foreach (string file in files)
                 try
                 {
-                    addPictureBox(Image.FromFile(file));
+                    addPictureBox(ImageFromFile(file));
                 }
                 catch (Exception ex)
                 {
