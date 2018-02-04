@@ -108,7 +108,7 @@ namespace PhotoStoryMerge
                     int w = im.Width == W ? 0 : (W - im.Width) / 2;
 
                     ///appearantly for 1 pixel == 1 pixel to be true, 96DPI is necessary... 
-                    if (enableDPIScalingToolStripMenuItem.Checked)
+                    if (ignoreDPIToolStripMenuItem.Checked)
                     {
                         Rectangle rect = new Rectangle(w, totalH, im.Width, im.Height);
                         canvas.DrawImage(im, rect , 0, 0, im.Width, im.Height, GraphicsUnit.Pixel);
@@ -254,6 +254,23 @@ namespace PhotoStoryMerge
             new PreviewForm(generateMergedImage()).Show();    
         }
 
+        #endregion
+
+        #region Help
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String text = "Quick and easy way of creating a compilation/story from distinct images.\n"+
+                "Offers the possibility to rescale the image after generation, should it be necessary.\n"+
+                "\n\n"+
+                "The Ignore DPI feature (on by default) only consideres the resolution of the images on compositing.\n"+
+                "Disabling it will scale the images based on DPI, 1:1 pixel ratio being at 96DPI (value comes from Visual Studio or Microsoft or sthg).\n"+
+                "For example: putting a 182 DPI image with 800*600 pixels will result in an image with 400*300 pixels.\n"+
+                "\n\n"+
+                "To report any bugs of issues visit the repo: \n"+
+                "https://github.com/RobertKajnak/ImageStoryMerge";
+            String caption = "Help/About";
+            MessageBox.Show(text, caption);
+        }
         #endregion
 
         #endregion
@@ -406,5 +423,7 @@ namespace PhotoStoryMerge
         #endregion
 
         #endregion
+
+
     }
 }

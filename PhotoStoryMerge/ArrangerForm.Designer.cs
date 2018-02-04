@@ -40,10 +40,11 @@
             this.moveRightRightArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.invertOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.enableDPIScalingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ignoreDPIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.labelHelp = new System.Windows.Forms.Label();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,7 +55,8 @@
             this.fileToolStripMenuItem,
             this.orderToolStripMenuItem,
             this.optionsToolStripMenuItem,
-            this.generateToolStripMenuItem});
+            this.generateToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(684, 24);
@@ -139,19 +141,19 @@
             // optionsToolStripMenuItem
             // 
             this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.enableDPIScalingToolStripMenuItem});
+            this.ignoreDPIToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
             this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
             this.optionsToolStripMenuItem.Text = "Options";
             // 
-            // enableDPIScalingToolStripMenuItem
+            // ignoreDPIToolStripMenuItem
             // 
-            this.enableDPIScalingToolStripMenuItem.Checked = true;
-            this.enableDPIScalingToolStripMenuItem.CheckOnClick = true;
-            this.enableDPIScalingToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.enableDPIScalingToolStripMenuItem.Name = "enableDPIScalingToolStripMenuItem";
-            this.enableDPIScalingToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
-            this.enableDPIScalingToolStripMenuItem.Text = "Enable DPI Scaling";
+            this.ignoreDPIToolStripMenuItem.Checked = true;
+            this.ignoreDPIToolStripMenuItem.CheckOnClick = true;
+            this.ignoreDPIToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.ignoreDPIToolStripMenuItem.Name = "ignoreDPIToolStripMenuItem";
+            this.ignoreDPIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ignoreDPIToolStripMenuItem.Text = "IgnoreDPI";
             // 
             // generateToolStripMenuItem
             // 
@@ -184,6 +186,13 @@
             this.labelHelp.TabIndex = 1;
             this.labelHelp.Text = resources.GetString("labelHelp.Text");
             // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(82, 20);
+            this.helpToolStripMenuItem.Text = "Help/About";
+            this.helpToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
+            // 
             // ArrangerForm
             // 
             this.AllowDrop = true;
@@ -195,6 +204,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "ArrangerForm";
             this.Text = "Create a Picture Story";
+            this.Icon = ((System.Drawing.Icon)(Properties.Resources.PhotoStoryMerge));
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.ArrangerForm_DragEnter);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ArrangerForm_KeyDown);
@@ -224,7 +234,8 @@
         private System.Windows.Forms.ToolStripMenuItem pasteCtrlVToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearWorkspaceCtrlDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem enableDPIScalingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ignoreDPIToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
     }
 }
 

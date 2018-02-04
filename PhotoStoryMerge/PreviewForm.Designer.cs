@@ -179,6 +179,7 @@
             this.MainMenuStrip = this.menuStrip;
             this.Name = "PreviewForm";
             this.Text = "Preview";
+            this.Icon = ((System.Drawing.Icon)(Properties.Resources.PhotoStoryMerge));
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.PreviewForm_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PreviewForm_KeyPress);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.PreviewForm_KeyUp);
