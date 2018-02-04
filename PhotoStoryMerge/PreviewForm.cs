@@ -156,14 +156,34 @@ namespace PhotoStoryMerge
         /// <param name="image">The image to resize.</param>
         /// <param name="width">The width to resize to.</param>
         /// <param name="height">The height to resize to.</param>
+        /// <param name="xDPI"><para />Horizontal DPI value of new image. 
+        /// <para> -1 inherits previous value </para> 
+        /// <para> 0 scales by new/old resolution ratio </para>
+        /// <para> Other, negative values will set resolution to 96 DPI</para> </param>
+        /// <param name="yDPI">Vertical DPI value of new image. 
+        /// <para> -1 inherits previous value </para> 
+        /// <para> 0 scales by new/old resolution ratio </para>
+        /// <para> Other, negative values will set resolution to 96 DPI</para> </param>
         /// <returns>The resized image.</returns>
-        /// Curtesy of mpen @ stackoverflow
-        public static Bitmap ResizeImage(Image image, int width, int height)
+        /// Curtesy of mpen @ stackoverflow, modified to handle DPI changes
+        public static Bitmap ResizeImage(Image image, int width, int height, float xDPI=-1, float yDPI=-1 )
         {
             var destRect = new Rectangle(0, 0, width, height);
             var destImage = new Bitmap(width, height);
 
-            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+            ///switch-case is for chumps!
+            xDPI = 
+                xDPI == -1 ? image.HorizontalResolution : 
+                xDPI ==  0 ? image.HorizontalResolution * width / image.Width : 
+                xDPI <   0 ? 96:
+                xDPI;
+            yDPI = 
+                yDPI == -1 ? image.VerticalResolution :
+                yDPI ==  0 ? image.VerticalResolution * height / image.Height :
+                yDPI <   0 ? 96:
+                yDPI;
+
+            destImage.SetResolution(xDPI, yDPI);
 
             using (var graphics = Graphics.FromImage(destImage))
             {

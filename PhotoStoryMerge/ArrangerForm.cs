@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Drawing.Imaging;
 using System.Text;
 using System.Windows.Forms;
 
@@ -79,7 +81,7 @@ namespace PhotoStoryMerge
 
         private Image generateMergedImage()
         {
-            int W = 0, H = 0;
+            int W = 0, H = 0; 
             foreach (var v in pictureBoxes)
             {
                 PictureBox pb = (PictureBox)v;
@@ -94,6 +96,9 @@ namespace PhotoStoryMerge
             {
                 ///for zooming and rotation
                 canvas.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                canvas.CompositingQuality = CompositingQuality.HighQuality;
+                canvas.SmoothingMode = SmoothingMode.HighQuality;
+                canvas.PixelOffsetMode = PixelOffsetMode.HighQuality;
                 int totalH = 0;
                 foreach (var v in pictureBoxes)
                 {
@@ -102,7 +107,17 @@ namespace PhotoStoryMerge
                     int h = im.Height;
                     int w = im.Width == W ? 0 : (W - im.Width) / 2;
 
-                    canvas.DrawImage(im, w, totalH);
+                    ///appearantly for 1 pixel == 1 pixel to be true, 96DPI is necessary... 
+                    if (enableDPIScalingToolStripMenuItem.Checked)
+                    {
+                        Rectangle rect = new Rectangle(w, totalH, im.Width, im.Height);
+                        canvas.DrawImage(im, rect , 0, 0, im.Width, im.Height, GraphicsUnit.Pixel);
+                    }
+                    else
+                    {
+                        canvas.DrawImage(im, w, totalH);
+                    }                  
+                    
                     totalH += h;
                 }
                 canvas.Save();
@@ -110,6 +125,36 @@ namespace PhotoStoryMerge
 
             return merged;
 
+        }
+
+        /// <summary>
+        /// Creates a copy of the image, but uses the new DPI values
+        /// </summary>
+        /// <param name="image">The old Image</param>
+        /// <param name="xDPI">The new horizontal DPI</param>
+        /// <param name="yDPI">The new vertical DPI</param>
+        /// <returns>The new image</returns>
+        public static Bitmap ChangeDPI(Image image, float xDPI, float yDPI)
+        {
+            var destRect = new Rectangle(0, 0, image.Width, image.Height);
+            var destImage = new Bitmap(image.Width, image.Height);
+            destImage.SetResolution(xDPI, yDPI);
+
+            using (var graphics = Graphics.FromImage(destImage))
+            {
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
+            }
+            destImage.SetResolution(xDPI, yDPI);
+
+            return destImage;
         }
 
         #endregion

@@ -33,15 +33,17 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pasteCtrlVToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearWorkspaceCtrlDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveLeftLeftArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.moveRightRightArrowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.invertOrderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.enableDPIScalingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.generateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.labelHelp = new System.Windows.Forms.Label();
-            this.clearWorkspaceCtrlDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,6 +53,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.orderToolStripMenuItem,
+            this.optionsToolStripMenuItem,
             this.generateToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -84,6 +87,13 @@
             this.pasteCtrlVToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
             this.pasteCtrlVToolStripMenuItem.Text = "Paste (Ctrl+V)";
             this.pasteCtrlVToolStripMenuItem.Click += new System.EventHandler(this.pasteCtrlVToolStripMenuItem_Click);
+            // 
+            // clearWorkspaceCtrlDToolStripMenuItem
+            // 
+            this.clearWorkspaceCtrlDToolStripMenuItem.Name = "clearWorkspaceCtrlDToolStripMenuItem";
+            this.clearWorkspaceCtrlDToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
+            this.clearWorkspaceCtrlDToolStripMenuItem.Text = "Clear Workspace (Ctrl+D)";
+            this.clearWorkspaceCtrlDToolStripMenuItem.Click += new System.EventHandler(this.clearWorkspaceCtrlDToolStripMenuItem_Click);
             // 
             // closeToolStripMenuItem
             // 
@@ -126,6 +136,23 @@
             this.invertOrderToolStripMenuItem.Text = "Invert Order (i)";
             this.invertOrderToolStripMenuItem.Click += new System.EventHandler(this.invertOrderToolStripMenuItem_Click);
             // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.enableDPIScalingToolStripMenuItem});
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.optionsToolStripMenuItem.Text = "Options";
+            // 
+            // enableDPIScalingToolStripMenuItem
+            // 
+            this.enableDPIScalingToolStripMenuItem.Checked = true;
+            this.enableDPIScalingToolStripMenuItem.CheckOnClick = true;
+            this.enableDPIScalingToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.enableDPIScalingToolStripMenuItem.Name = "enableDPIScalingToolStripMenuItem";
+            this.enableDPIScalingToolStripMenuItem.Size = new System.Drawing.Size(171, 22);
+            this.enableDPIScalingToolStripMenuItem.Text = "Enable DPI Scaling";
+            // 
             // generateToolStripMenuItem
             // 
             this.generateToolStripMenuItem.Name = "generateToolStripMenuItem";
@@ -156,13 +183,6 @@
             this.labelHelp.Size = new System.Drawing.Size(478, 273);
             this.labelHelp.TabIndex = 1;
             this.labelHelp.Text = resources.GetString("labelHelp.Text");
-            // 
-            // clearWorkspaceCtrlDToolStripMenuItem
-            // 
-            this.clearWorkspaceCtrlDToolStripMenuItem.Name = "clearWorkspaceCtrlDToolStripMenuItem";
-            this.clearWorkspaceCtrlDToolStripMenuItem.Size = new System.Drawing.Size(208, 22);
-            this.clearWorkspaceCtrlDToolStripMenuItem.Text = "Clear Workspace (Ctrl+D)";
-            this.clearWorkspaceCtrlDToolStripMenuItem.Click += new System.EventHandler(this.clearWorkspaceCtrlDToolStripMenuItem_Click);
             // 
             // ArrangerForm
             // 
@@ -203,6 +223,8 @@
         private System.Windows.Forms.ToolStripMenuItem moveRightRightArrowToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pasteCtrlVToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearWorkspaceCtrlDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem enableDPIScalingToolStripMenuItem;
     }
 }
 
