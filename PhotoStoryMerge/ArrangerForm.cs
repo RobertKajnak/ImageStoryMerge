@@ -25,6 +25,7 @@ namespace PhotoStoryMerge
 
         private PictureBox addPictureBox(Image image)
         {
+
             if (labelHelp.Visible)
             {
                 labelHelp.Visible = false;
@@ -205,14 +206,7 @@ namespace PhotoStoryMerge
 
         private void generateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (pictureBoxes.Count < 2)
-            {
-                MessageBox.Show("Please add at least 2 images to merge", "Not enough images");
-            }
-            else
-            {
-                new PreviewForm(generateMergedImage()).Show();
-            }
+            new PreviewForm(generateMergedImage()).Show();    
         }
 
         #endregion
