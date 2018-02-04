@@ -1,7 +1,7 @@
 # ImageStoryMerge
 Merges several images into a single long one, as seen in some memes.  
 
-<b>Requires .NET Framework 4.6.1. It can be freely downloaded from:  </b>
+<b>Requires .NET Framework 4.6.1.</b> It can be freely downloaded from:  
 https://www.microsoft.com/en-us/download/details.aspx?id=49981  
 
 After loading the images, they can be rearranged on-the-fly.  
