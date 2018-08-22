@@ -25,6 +25,50 @@ namespace PhotoStoryMerge
 
         #region Utility Classes and Functions
 
+        private void openOpenFileDialog()
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+            // Set filter options and filter index.
+            openFileDialog1.Filter = "All Files (*.*)|*.*|JPG Image Files|*.jpg|PNG Image Files|*.png|TIFF Image Files|*.tiff|Icon|*.ico";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.Multiselect = true;
+
+            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                foreach (string filename in openFileDialog1.FileNames)
+                {
+                    Image image = ImageFromFile(filename);
+                    addPictureBox(image);
+                }
+            }
+        }
+
+        private void pasteItem()
+        {
+            IDataObject iData = Clipboard.GetDataObject();
+            if (iData.GetDataPresent(DataFormats.Bitmap))
+            {
+
+                addPictureBox(Clipboard.GetImage());
+            }
+
+            if (iData.GetDataPresent(DataFormats.FileDrop))
+            {
+                foreach (var v in Clipboard.GetFileDropList())
+                {
+                    try
+                    {
+                        addPictureBox(ImageFromFile(v));
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Text does not lead do a valid image file");
+                    }
+                }
+            }
+        }
+
         private PictureBox addPictureBox(Image image)
         {
 
@@ -55,6 +99,46 @@ namespace PhotoStoryMerge
             return pictureBox;
         }
 
+        private void removePictureBox()
+        {
+            if (selectedPictureBox != null)
+            {
+                pictureBoxes.Remove(selectedPictureBox);
+                selectedPictureBox.Image.Dispose();
+                selectedPictureBox.Dispose();
+                selectedPictureBox = null;
+                if (this.pictureBoxes.Count == 0)
+                {
+                    labelHelp.Visible = true;
+                }
+            }
+            else
+            {
+                if (pictureBoxes.Count > 0)
+                {
+                    selectPictureBox((PictureBox)pictureBoxes[0]);
+                }
+            }
+        }
+
+        private void clearWorkspace()
+        {
+            selectedPictureBox = null;
+            pictureBoxes.Clear();
+            System.GC.Collect();
+            labelHelp.Visible = true;
+        }
+
+        private void selectPictureBox(PictureBox pb)
+        {
+            if (selectedPictureBox != null)
+            {
+                selectedPictureBox.BackColor = SystemColors.Control;
+            }
+            selectedPictureBox = (pb);
+            selectedPictureBox.BackColor = Color.CadetBlue;
+        }
+
         private void moveItemLeft()
         {
             if (selectedPictureBox != null)
@@ -63,6 +147,13 @@ namespace PhotoStoryMerge
                 if (ind > 0)
                 {
                     pictureBoxes.SetChildIndex(selectedPictureBox, ind - 1);
+                }
+            }
+            else
+            {
+                if (pictureBoxes.Count > 0)
+                {
+                    selectPictureBox((PictureBox)pictureBoxes[pictureBoxes.Count - 1]);
                 }
             }
         }
@@ -76,6 +167,33 @@ namespace PhotoStoryMerge
                 {
                     pictureBoxes.SetChildIndex(selectedPictureBox, ind + 1);
                 }
+            }
+            else
+            {
+                if (pictureBoxes.Count > 0)
+                {
+                    selectPictureBox((PictureBox)pictureBoxes[0]);
+                }
+            }
+        }
+
+        private void invertOrder()
+        {
+            for (int i = 0; i < pictureBoxes.Count - 2; i++)
+            {
+                pictureBoxes.SetChildIndex(pictureBoxes[pictureBoxes.Count - 1], i);
+            }
+        }
+
+        private void sendGeneratedImage()
+        {
+            if (pictureBoxes.Count < 1)
+            {
+                MessageBox.Show("Please add at least one images to merge", "Not enough images");
+            }
+            else
+            {
+                new PreviewForm(generateMergedImage()).Show();
             }
         }
 
@@ -207,40 +325,17 @@ namespace PhotoStoryMerge
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            flowLayoutPanel1_DoubleClick(sender, e);
+            openOpenFileDialog();
         }
 
         private void pasteCtrlVToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IDataObject iData = Clipboard.GetDataObject();
-            if (iData.GetDataPresent(DataFormats.Bitmap))
-            {
-
-                addPictureBox(Clipboard.GetImage());
-            }
-
-            if (iData.GetDataPresent(DataFormats.FileDrop))
-            {
-                foreach (var v in Clipboard.GetFileDropList())
-                {
-                    try
-                    {
-                        addPictureBox(ImageFromFile(v));
-                    }
-                    catch
-                    {
-                        Console.WriteLine("Text does not leat do a valid image file");
-                    }
-                }
-            }
+            pasteItem();
         }
 
         private void clearWorkspaceCtrlDToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            selectedPictureBox = null;
-            pictureBoxes.Clear();
-            System.GC.Collect();
-            labelHelp.Visible = true;
+            clearWorkspace();
         }
 
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -248,6 +343,15 @@ namespace PhotoStoryMerge
             this.Dispose();
             this.Close();
             Application.Exit();
+        }
+
+        #endregion
+
+        #region Insert
+
+        private void blankSpaceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
 
         #endregion
@@ -280,10 +384,7 @@ namespace PhotoStoryMerge
 
         private void invertOrderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < pictureBoxes.Count - 2; i++)
-            {
-                pictureBoxes.SetChildIndex(pictureBoxes[pictureBoxes.Count - 1], i);
-            }
+            invertOrder();
         }
 
         #endregion
@@ -292,14 +393,7 @@ namespace PhotoStoryMerge
 
         private void generateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (pictureBoxes.Count < 1)
-            {
-                MessageBox.Show("Please add at least one images to merge", "Not enough images");
-            }
-            else
-            {
-                new PreviewForm(generateMergedImage()).Show();
-            }
+            sendGeneratedImage();
         }
 
         #endregion
@@ -331,31 +425,12 @@ namespace PhotoStoryMerge
 
         private void flowLayoutPanel1_DoubleClick(object sender, EventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-
-            // Set filter options and filter index.
-            openFileDialog1.Filter = "All Files (*.*)|*.*|JPG Image Files|*.jpg|PNG Image Files|*.png|TIFF Image Files|*.tiff|Icon|*.ico";
-            openFileDialog1.FilterIndex = 1;
-            openFileDialog1.Multiselect = true;
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                foreach (string filename in openFileDialog1.FileNames)
-                {
-                    Image image = ImageFromFile(filename);
-                    addPictureBox(image);
-                }
-            }
+            openOpenFileDialog();
         }
 
         private void pictureBox_Click(object sender, EventArgs e)
         {
-            if (selectedPictureBox != null)
-            {
-                selectedPictureBox.BackColor = SystemColors.Control;
-            }
-            selectedPictureBox = ((PictureBox)sender);
-            selectedPictureBox.BackColor = Color.CadetBlue;
+            selectPictureBox((PictureBox)sender);
         }
 
         private void flowLayoutPanelMain_Click(object sender, EventArgs e)
@@ -389,45 +464,36 @@ namespace PhotoStoryMerge
             switch (e.KeyCode)
             {
                 case (Keys.O):
-                    flowLayoutPanel1_DoubleClick(sender, e);
+                    openOpenFileDialog();
                     break;
                 case (Keys.D):
-                    clearWorkspaceCtrlDToolStripMenuItem_Click(sender, e);
+                    clearWorkspace();
                     break;
                 case (Keys.I):
-                    invertOrderToolStripMenuItem_Click(sender, e);
+                    invertOrder();
                     break;
                 case (Keys.V):
                     if (isControlPressed)
                     {
-                        pasteCtrlVToolStripMenuItem_Click(sender, e);
+                        pasteItem();
                     }
                     break;
                 case (Keys.ControlKey):
                     isControlPressed = true;
                     break;
                 case (Keys.Enter):
-                    generateToolStripMenuItem_Click(sender, e);
+                    sendGeneratedImage();
                     break;
                 case (Keys.Left):
-                    if (selectedPictureBox != null)
-                        moveItemLeft();
+                    moveItemLeft();
                     break;
                 case (Keys.Right):
-                    if (selectedPictureBox != null)
-                        moveItemRight();
+                    moveItemRight();
                     break;
                 case (Keys.Delete):
                 //intentional fallthrough
                 case (Keys.Back):
-                    pictureBoxes.Remove(selectedPictureBox);
-                    selectedPictureBox.Image.Dispose();
-                    selectedPictureBox.Dispose();
-                    selectedPictureBox = null;
-                    if (this.pictureBoxes.Count == 0)
-                    {
-                        labelHelp.Visible = true;
-                    }
+                    removePictureBox();
                     break;
             }
         }
@@ -473,6 +539,7 @@ namespace PhotoStoryMerge
         {
             flowLayoutPanelMain.Size = new System.Drawing.Size(this.ClientSize.Width, this.ClientSize.Height - this.menuStrip1.Height);
         }
+
 
         #endregion
 

@@ -46,6 +46,10 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.labelHelp = new System.Windows.Forms.Label();
+            this.insertStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.blankSpaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textBetweenImagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.textOverlayedOnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,6 +58,7 @@
             this.menuStrip1.AllowDrop = true;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.insertStripMenuItem,
             this.orderToolStripMenuItem,
             this.optionsToolStripMenuItem,
             this.generateToolStripMenuItem,
@@ -154,14 +159,14 @@
             this.ignoreDPIToolStripMenuItem.CheckOnClick = true;
             this.ignoreDPIToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.ignoreDPIToolStripMenuItem.Name = "ignoreDPIToolStripMenuItem";
-            this.ignoreDPIToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.ignoreDPIToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ignoreDPIToolStripMenuItem.Text = "IgnoreDPI";
             // 
             // lockLoadFilesToolStripMenuItem
             // 
             this.lockLoadFilesToolStripMenuItem.CheckOnClick = true;
             this.lockLoadFilesToolStripMenuItem.Name = "lockLoadFilesToolStripMenuItem";
-            this.lockLoadFilesToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.lockLoadFilesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.lockLoadFilesToolStripMenuItem.Text = "Lock-Load Files";
             // 
             // generateToolStripMenuItem
@@ -201,6 +206,35 @@
             this.labelHelp.Size = new System.Drawing.Size(478, 273);
             this.labelHelp.TabIndex = 1;
             this.labelHelp.Text = resources.GetString("labelHelp.Text");
+            // 
+            // insertStripMenuItem
+            // 
+            this.insertStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.blankSpaceToolStripMenuItem,
+            this.textBetweenImagesToolStripMenuItem,
+            this.textOverlayedOnToolStripMenuItem});
+            this.insertStripMenuItem.Name = "insertStripMenuItem";
+            this.insertStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.insertStripMenuItem.Text = "Insert";
+            // 
+            // blankSpaceToolStripMenuItem
+            // 
+            this.blankSpaceToolStripMenuItem.Name = "blankSpaceToolStripMenuItem";
+            this.blankSpaceToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.blankSpaceToolStripMenuItem.Text = "Blank Space";
+            this.blankSpaceToolStripMenuItem.Click += new System.EventHandler(this.blankSpaceToolStripMenuItem_Click);
+            // 
+            // textBetweenImagesToolStripMenuItem
+            // 
+            this.textBetweenImagesToolStripMenuItem.Name = "textBetweenImagesToolStripMenuItem";
+            this.textBetweenImagesToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.textBetweenImagesToolStripMenuItem.Text = "Text Between Images";
+            // 
+            // textOverlayedOnToolStripMenuItem
+            // 
+            this.textOverlayedOnToolStripMenuItem.Name = "textOverlayedOnToolStripMenuItem";
+            this.textOverlayedOnToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.textOverlayedOnToolStripMenuItem.Text = "Text Overlayed On";
             // 
             // ArrangerForm
             // 
@@ -246,6 +280,10 @@
         private System.Windows.Forms.ToolStripMenuItem ignoreDPIToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lockLoadFilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem insertStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem blankSpaceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem textBetweenImagesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem textOverlayedOnToolStripMenuItem;
     }
 }
 
