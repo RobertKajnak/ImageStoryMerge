@@ -69,6 +69,11 @@ namespace PhotoStoryMerge
             }
         }
 
+        private void addBlankSpace(int width, int height)
+        {
+
+        }
+
         private PictureBox addPictureBox(Image image)
         {
 
@@ -183,6 +188,11 @@ namespace PhotoStoryMerge
             {
                 pictureBoxes.SetChildIndex(pictureBoxes[pictureBoxes.Count - 1], i);
             }
+        }
+
+        private void generateTextImage()
+        {
+            new TextAndSpaceCustomizationForm().Show();
         }
 
         private void sendGeneratedImage()
@@ -351,7 +361,7 @@ namespace PhotoStoryMerge
 
         private void blankSpaceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            generateTextImage();
         }
 
         #endregion
@@ -409,7 +419,7 @@ namespace PhotoStoryMerge
                 "For example: putting a 182 DPI image with 800*600 pixels will result in an image with 400*300 pixels.\n"+
                 "\n\n"+
                 "\"Lock-Load Files\" locks the added files to the application so they can't be modified externally.\n"+
-                "Might fix some issues with some wierder file configurations, but is usually not necessary"+
+                "Might fix some issues with some wierder file configurations, but is usually not necessary. "+
                 "Only has effect on files added after changing the option (i.e. does not reload files already inside the application)\n"+
                 "\n\n"+
                 "To report any bugs of issues visit the repo: \n"+
@@ -471,6 +481,9 @@ namespace PhotoStoryMerge
                     break;
                 case (Keys.I):
                     invertOrder();
+                    break;
+                case (Keys.T):
+                    generateTextImage();
                     break;
                 case (Keys.V):
                     if (isControlPressed)
@@ -539,6 +552,7 @@ namespace PhotoStoryMerge
         {
             flowLayoutPanelMain.Size = new System.Drawing.Size(this.ClientSize.Width, this.ClientSize.Height - this.menuStrip1.Height);
         }
+
 
 
         #endregion
