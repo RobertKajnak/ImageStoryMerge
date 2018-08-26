@@ -44,11 +44,14 @@
             this.radioButtonTextHeightPixels = new System.Windows.Forms.RadioButton();
             this.heightPixelsTextBox = new System.Windows.Forms.TextBox();
             this.textEditGroupBox = new System.Windows.Forms.GroupBox();
+            this.buttonFontSelect = new System.Windows.Forms.Button();
             this.textEditRichTextBox = new System.Windows.Forms.RichTextBox();
             this.radioButtonBlank = new System.Windows.Forms.RadioButton();
             this.radioButtonAddText = new System.Windows.Forms.RadioButton();
             this.createButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
+            this.checkBoxTextScale = new System.Windows.Forms.CheckBox();
+            this.textBoxScalingFactor = new System.Windows.Forms.TextBox();
             this.widthFlowLayoutPanel1.SuspendLayout();
             this.heightFlowLayoutPanel.SuspendLayout();
             this.textEditGroupBox.SuspendLayout();
@@ -97,6 +100,7 @@
             this.radioButtonTextHeight2.TabStop = true;
             this.radioButtonTextHeight2.Text = "Text-height *2";
             this.radioButtonTextHeight2.UseVisualStyleBackColor = true;
+            this.radioButtonTextHeight2.CheckedChanged += new System.EventHandler(this.radioButtonTextHeight2_CheckedChanged);
             // 
             // labelHeight
             // 
@@ -146,6 +150,7 @@
             this.widthTextBox.Name = "widthTextBox";
             this.widthTextBox.Size = new System.Drawing.Size(88, 20);
             this.widthTextBox.TabIndex = 4;
+            this.widthTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.widthTextBox.TextChanged += new System.EventHandler(this.widthTextBox_TextChanged);
             this.widthTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.widthTextBox_KeyPress);
             // 
@@ -171,6 +176,7 @@
             this.radioButtonTextHeight4.TabIndex = 4;
             this.radioButtonTextHeight4.Text = "Text-height *4";
             this.radioButtonTextHeight4.UseVisualStyleBackColor = true;
+            this.radioButtonTextHeight4.CheckedChanged += new System.EventHandler(this.radioButtonTextHeight4_CheckedChanged);
             // 
             // radioButtonTextHeightCustom
             // 
@@ -190,6 +196,8 @@
             this.heightTextMultipleTextBox.Name = "heightTextMultipleTextBox";
             this.heightTextMultipleTextBox.Size = new System.Drawing.Size(66, 20);
             this.heightTextMultipleTextBox.TabIndex = 6;
+            this.heightTextMultipleTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.heightTextMultipleTextBox.TextChanged += new System.EventHandler(this.heightTextMultipleTextBox_TextChanged);
             this.heightTextMultipleTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.heightTextMultipleTextBox_KeyPress);
             // 
             // radioButtonTextHeightPixels
@@ -210,25 +218,40 @@
             this.heightPixelsTextBox.Name = "heightPixelsTextBox";
             this.heightPixelsTextBox.Size = new System.Drawing.Size(66, 20);
             this.heightPixelsTextBox.TabIndex = 8;
+            this.heightPixelsTextBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.heightPixelsTextBox.TextChanged += new System.EventHandler(this.heightPixelsTextBox_TextChanged);
             this.heightPixelsTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.heightPixelsTextBox_KeyPress);
             // 
             // textEditGroupBox
             // 
+            this.textEditGroupBox.Controls.Add(this.textBoxScalingFactor);
+            this.textEditGroupBox.Controls.Add(this.checkBoxTextScale);
+            this.textEditGroupBox.Controls.Add(this.buttonFontSelect);
             this.textEditGroupBox.Controls.Add(this.textEditRichTextBox);
             this.textEditGroupBox.Controls.Add(this.radioButtonBlank);
             this.textEditGroupBox.Controls.Add(this.radioButtonAddText);
             this.textEditGroupBox.Location = new System.Drawing.Point(46, 208);
             this.textEditGroupBox.Name = "textEditGroupBox";
-            this.textEditGroupBox.Size = new System.Drawing.Size(326, 142);
+            this.textEditGroupBox.Size = new System.Drawing.Size(326, 168);
             this.textEditGroupBox.TabIndex = 8;
             this.textEditGroupBox.TabStop = false;
+            // 
+            // buttonFontSelect
+            // 
+            this.buttonFontSelect.Location = new System.Drawing.Point(298, 42);
+            this.buttonFontSelect.Name = "buttonFontSelect";
+            this.buttonFontSelect.Size = new System.Drawing.Size(22, 94);
+            this.buttonFontSelect.TabIndex = 3;
+            this.buttonFontSelect.Text = "Font";
+            this.buttonFontSelect.UseVisualStyleBackColor = true;
+            this.buttonFontSelect.Click += new System.EventHandler(this.buttonFontSelect_Click);
             // 
             // textEditRichTextBox
             // 
             this.textEditRichTextBox.DetectUrls = false;
             this.textEditRichTextBox.Location = new System.Drawing.Point(6, 42);
             this.textEditRichTextBox.Name = "textEditRichTextBox";
-            this.textEditRichTextBox.Size = new System.Drawing.Size(314, 94);
+            this.textEditRichTextBox.Size = new System.Drawing.Size(285, 94);
             this.textEditRichTextBox.TabIndex = 2;
             this.textEditRichTextBox.Text = "";
             // 
@@ -257,7 +280,7 @@
             // 
             // createButton
             // 
-            this.createButton.Location = new System.Drawing.Point(83, 366);
+            this.createButton.Location = new System.Drawing.Point(83, 394);
             this.createButton.Name = "createButton";
             this.createButton.Size = new System.Drawing.Size(75, 23);
             this.createButton.TabIndex = 9;
@@ -267,7 +290,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(247, 366);
+            this.cancelButton.Location = new System.Drawing.Point(247, 394);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 10;
@@ -275,11 +298,35 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
+            // checkBoxTextScale
+            // 
+            this.checkBoxTextScale.AutoSize = true;
+            this.checkBoxTextScale.Checked = true;
+            this.checkBoxTextScale.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxTextScale.Location = new System.Drawing.Point(47, 143);
+            this.checkBoxTextScale.Name = "checkBoxTextScale";
+            this.checkBoxTextScale.Size = new System.Drawing.Size(148, 17);
+            this.checkBoxTextScale.TabIndex = 4;
+            this.checkBoxTextScale.Text = "Scale Text by a Factor of:";
+            this.checkBoxTextScale.UseVisualStyleBackColor = true;
+            this.checkBoxTextScale.CheckedChanged += new System.EventHandler(this.checkBoxTextScale_CheckedChanged);
+            // 
+            // textBoxScalingFactor
+            // 
+            this.textBoxScalingFactor.Location = new System.Drawing.Point(201, 141);
+            this.textBoxScalingFactor.Name = "textBoxScalingFactor";
+            this.textBoxScalingFactor.Size = new System.Drawing.Size(52, 20);
+            this.textBoxScalingFactor.TabIndex = 5;
+            this.textBoxScalingFactor.Text = "20.0";
+            this.textBoxScalingFactor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBoxScalingFactor.TextChanged += new System.EventHandler(this.textBoxScalingFactor_TextChanged);
+            this.textBoxScalingFactor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxScalingFactor_KeyPress);
+            // 
             // TextAndSpaceCustomizationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(429, 537);
+            this.ClientSize = new System.Drawing.Size(420, 444);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.createButton);
             this.Controls.Add(this.textEditGroupBox);
@@ -327,5 +374,8 @@
         private System.Windows.Forms.RichTextBox textEditRichTextBox;
         private System.Windows.Forms.Button createButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.Button buttonFontSelect;
+        private System.Windows.Forms.TextBox textBoxScalingFactor;
+        private System.Windows.Forms.CheckBox checkBoxTextScale;
     }
 }

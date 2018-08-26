@@ -192,7 +192,13 @@ namespace PhotoStoryMerge
 
         private void generateTextImage()
         {
-            new TextAndSpaceCustomizationForm().Show();
+            TextAndSpaceCustomizationForm textCustomizer = new TextAndSpaceCustomizationForm();
+            if (textCustomizer.ShowDialog() != DialogResult.Cancel)
+            {
+                Bitmap generatedText = textCustomizer.GetTextImage();
+                addPictureBox(generatedText);
+            }
+
         }
 
         private void sendGeneratedImage()
