@@ -17,8 +17,6 @@ namespace PhotoStoryMerge
         int heightPixelsCurrent = 0;
         int widthPixelsCurrent = 0;
         double textScaleFactor = 20;
-        Color backColorCurrent = Color.Black;
-        Color foreColorCurrent = Color.White;
 
         public TextAndSpaceCustomizationForm()
         {
@@ -65,15 +63,15 @@ namespace PhotoStoryMerge
 
         public Bitmap GetTextImage()
         {
-            return GenerateBMPWithText(widthPixelsCurrent, heightPixelsCurrent,
-                backColorCurrent, textEditRichTextBox.Text, textEditRichTextBox.Font, foreColorCurrent);
+            return GenerateBMPWithText(widthPixelsCurrent, heightPixelsCurrent, buttonBackgroundColor.BackColor,
+                textEditRichTextBox.Text, textEditRichTextBox.Font, buttonForegroundColor.BackColor);
         }
         #endregion
 
         #region Logic
-        private void FilterNonDigits(object sender, KeyPressEventArgs e)
+        private void FilterNonDigits(object sender, KeyPressEventArgs e, bool allowDecimal = true)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && !(e.KeyChar == '.' && allowDecimal))
             {
                 e.Handled = true;
             }
@@ -95,7 +93,7 @@ namespace PhotoStoryMerge
         #region Events
         private void heightPixelsTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            FilterNonDigits(sender, e);
+            FilterNonDigits(sender, e, allowDecimal:false);
         }
         #endregion
 
@@ -106,7 +104,7 @@ namespace PhotoStoryMerge
 
         private void widthTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            FilterNonDigits(sender, e);
+            FilterNonDigits(sender, e, allowDecimal:false);
         }
 
         private void textBoxScalingFactor_KeyPress(object sender, KeyPressEventArgs e)
@@ -196,9 +194,69 @@ namespace PhotoStoryMerge
             groupRadioHeight_CheckedChanged(sender, e);
         }
 
-        private void widthTextBox_TextChanged(object sender, EventArgs e)
+
+        /// <summary>
+        /// This is intended as a sure-fire method for text changed, 
+        /// in case the contents of the text field are changed through non-keypress methods
+        /// 
+        /// </summary>
+        /*class ValidNumber
+        {
+            int valueInt;
+            double valueDouble;
+            bool allowNegative = false;
+            bool allowZero = false;
+            bool allowDecimal = false;
+
+            public ValidNumber(bool allowNegative = false, bool allowZero = false, bool allowDecimal = false)
+            {
+                this.allowDecimal = allowDecimal;
+                this.allowZero = allowZero;
+                this.allowNegative = allowNegative;
+            }
+
+            private (string, int) verifyInt(string text)
+            {
+                
+            }
+
+            private string verifyDouble(string text)
+            {
+
+            }
+        }*/
+
+        /*private string ValidateText(string textField, string oldValue, ref double validatedValue,
+         bool allowNegative = false, bool allowZero = false)
         {
 
+        }*/
+        /*private string ValidateText(ref string textField, string oldValue,ref double validatedValue, 
+                 bool allowNegative = false, bool allowZero = false)
+        {
+            try
+            {
+                validatedValue = int.Parse(textField);
+                if (!allowNegative && validatedValue < 0)
+                    throw new ArgumentOutOfRangeException("Value less than 0 not allowed");
+                if (!allowZero && validatedValue == 0)
+                    throw new ArgumentOutOfRangeException("Value == 0 not allowed");
+                oldValue = textField;
+            }
+            catch
+            {
+                MessageBox.Show("Only positive integer values are allowed", "Invalid text detected in width field");
+                textField = widthTextBoxPreviousText;
+            }
+            return textField;
+        }
+
+        (string, int) widthTextBoxPreviousText = "";*/
+        private void widthTextBox_TextChanged(object sender, EventArgs e)
+        {
+            //widthTextBox.Text = ValidateText(ref widthTextBox.Text, widthTextBoxPreviousText, ref widthPixelsCurrent);
+
+            
         }
 
         private void groupRadioHeight_CheckedChanged(object sender, EventArgs e)
@@ -257,6 +315,7 @@ namespace PhotoStoryMerge
             else
             {
                 textBoxScalingFactor.Enabled = false;
+                textBoxScalingFactor.Text = "1.0";
             }
         }
 
@@ -285,6 +344,22 @@ namespace PhotoStoryMerge
 
         }
 
+        private void buttonBackgroundColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog(); 
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                buttonBackgroundColor.BackColor = colorDialog.Color;
+            }
+        }
 
+        private void buttonForegroundColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                buttonForegroundColor.BackColor = colorDialog.Color;
+            }
+        }
     }
 }

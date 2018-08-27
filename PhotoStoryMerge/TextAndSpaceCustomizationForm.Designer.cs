@@ -44,17 +44,23 @@
             this.radioButtonTextHeightPixels = new System.Windows.Forms.RadioButton();
             this.heightPixelsTextBox = new System.Windows.Forms.TextBox();
             this.textEditGroupBox = new System.Windows.Forms.GroupBox();
+            this.textBoxScalingFactor = new System.Windows.Forms.TextBox();
+            this.checkBoxTextScale = new System.Windows.Forms.CheckBox();
             this.buttonFontSelect = new System.Windows.Forms.Button();
             this.textEditRichTextBox = new System.Windows.Forms.RichTextBox();
             this.radioButtonBlank = new System.Windows.Forms.RadioButton();
             this.radioButtonAddText = new System.Windows.Forms.RadioButton();
             this.createButton = new System.Windows.Forms.Button();
             this.cancelButton = new System.Windows.Forms.Button();
-            this.checkBoxTextScale = new System.Windows.Forms.CheckBox();
-            this.textBoxScalingFactor = new System.Windows.Forms.TextBox();
+            this.groupBoxColorSelect = new System.Windows.Forms.GroupBox();
+            this.labelBackgoundColor = new System.Windows.Forms.Label();
+            this.buttonForegroundColor = new System.Windows.Forms.Button();
+            this.buttonBackgroundColor = new System.Windows.Forms.Button();
+            this.labelForeground = new System.Windows.Forms.Label();
             this.widthFlowLayoutPanel1.SuspendLayout();
             this.heightFlowLayoutPanel.SuspendLayout();
             this.textEditGroupBox.SuspendLayout();
+            this.groupBoxColorSelect.SuspendLayout();
             this.SuspendLayout();
             // 
             // radioButtonPreviousImage
@@ -230,11 +236,35 @@
             this.textEditGroupBox.Controls.Add(this.textEditRichTextBox);
             this.textEditGroupBox.Controls.Add(this.radioButtonBlank);
             this.textEditGroupBox.Controls.Add(this.radioButtonAddText);
-            this.textEditGroupBox.Location = new System.Drawing.Point(46, 208);
+            this.textEditGroupBox.Location = new System.Drawing.Point(46, 264);
             this.textEditGroupBox.Name = "textEditGroupBox";
             this.textEditGroupBox.Size = new System.Drawing.Size(326, 168);
             this.textEditGroupBox.TabIndex = 8;
             this.textEditGroupBox.TabStop = false;
+            // 
+            // textBoxScalingFactor
+            // 
+            this.textBoxScalingFactor.Location = new System.Drawing.Point(201, 141);
+            this.textBoxScalingFactor.Name = "textBoxScalingFactor";
+            this.textBoxScalingFactor.Size = new System.Drawing.Size(52, 20);
+            this.textBoxScalingFactor.TabIndex = 5;
+            this.textBoxScalingFactor.Text = "20.0";
+            this.textBoxScalingFactor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBoxScalingFactor.TextChanged += new System.EventHandler(this.textBoxScalingFactor_TextChanged);
+            this.textBoxScalingFactor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxScalingFactor_KeyPress);
+            // 
+            // checkBoxTextScale
+            // 
+            this.checkBoxTextScale.AutoSize = true;
+            this.checkBoxTextScale.Checked = true;
+            this.checkBoxTextScale.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxTextScale.Location = new System.Drawing.Point(47, 143);
+            this.checkBoxTextScale.Name = "checkBoxTextScale";
+            this.checkBoxTextScale.Size = new System.Drawing.Size(148, 17);
+            this.checkBoxTextScale.TabIndex = 4;
+            this.checkBoxTextScale.Text = "Scale Text by a Factor of:";
+            this.checkBoxTextScale.UseVisualStyleBackColor = true;
+            this.checkBoxTextScale.CheckedChanged += new System.EventHandler(this.checkBoxTextScale_CheckedChanged);
             // 
             // buttonFontSelect
             // 
@@ -280,7 +310,7 @@
             // 
             // createButton
             // 
-            this.createButton.Location = new System.Drawing.Point(83, 394);
+            this.createButton.Location = new System.Drawing.Point(83, 450);
             this.createButton.Name = "createButton";
             this.createButton.Size = new System.Drawing.Size(75, 23);
             this.createButton.TabIndex = 9;
@@ -290,7 +320,7 @@
             // 
             // cancelButton
             // 
-            this.cancelButton.Location = new System.Drawing.Point(247, 394);
+            this.cancelButton.Location = new System.Drawing.Point(247, 450);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 10;
@@ -298,35 +328,61 @@
             this.cancelButton.UseVisualStyleBackColor = true;
             this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
-            // checkBoxTextScale
+            // groupBoxColorSelect
             // 
-            this.checkBoxTextScale.AutoSize = true;
-            this.checkBoxTextScale.Checked = true;
-            this.checkBoxTextScale.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxTextScale.Location = new System.Drawing.Point(47, 143);
-            this.checkBoxTextScale.Name = "checkBoxTextScale";
-            this.checkBoxTextScale.Size = new System.Drawing.Size(148, 17);
-            this.checkBoxTextScale.TabIndex = 4;
-            this.checkBoxTextScale.Text = "Scale Text by a Factor of:";
-            this.checkBoxTextScale.UseVisualStyleBackColor = true;
-            this.checkBoxTextScale.CheckedChanged += new System.EventHandler(this.checkBoxTextScale_CheckedChanged);
+            this.groupBoxColorSelect.Controls.Add(this.labelBackgoundColor);
+            this.groupBoxColorSelect.Controls.Add(this.buttonForegroundColor);
+            this.groupBoxColorSelect.Controls.Add(this.buttonBackgroundColor);
+            this.groupBoxColorSelect.Controls.Add(this.labelForeground);
+            this.groupBoxColorSelect.Location = new System.Drawing.Point(46, 209);
+            this.groupBoxColorSelect.Name = "groupBoxColorSelect";
+            this.groupBoxColorSelect.Size = new System.Drawing.Size(326, 49);
+            this.groupBoxColorSelect.TabIndex = 11;
+            this.groupBoxColorSelect.TabStop = false;
             // 
-            // textBoxScalingFactor
+            // labelBackgoundColor
             // 
-            this.textBoxScalingFactor.Location = new System.Drawing.Point(201, 141);
-            this.textBoxScalingFactor.Name = "textBoxScalingFactor";
-            this.textBoxScalingFactor.Size = new System.Drawing.Size(52, 20);
-            this.textBoxScalingFactor.TabIndex = 5;
-            this.textBoxScalingFactor.Text = "20.0";
-            this.textBoxScalingFactor.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.textBoxScalingFactor.TextChanged += new System.EventHandler(this.textBoxScalingFactor_TextChanged);
-            this.textBoxScalingFactor.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxScalingFactor_KeyPress);
+            this.labelBackgoundColor.AutoSize = true;
+            this.labelBackgoundColor.Location = new System.Drawing.Point(6, 20);
+            this.labelBackgoundColor.Name = "labelBackgoundColor";
+            this.labelBackgoundColor.Size = new System.Drawing.Size(92, 13);
+            this.labelBackgoundColor.TabIndex = 3;
+            this.labelBackgoundColor.Text = "Background Color";
+            // 
+            // buttonForegroundColor
+            // 
+            this.buttonForegroundColor.Location = new System.Drawing.Point(268, 15);
+            this.buttonForegroundColor.Name = "buttonForegroundColor";
+            this.buttonForegroundColor.Size = new System.Drawing.Size(23, 23);
+            this.buttonForegroundColor.TabIndex = 2;
+            this.buttonForegroundColor.UseVisualStyleBackColor = true;
+            this.buttonForegroundColor.Click += new System.EventHandler(this.buttonForegroundColor_Click);
+            // 
+            // buttonBackgroundColor
+            // 
+            this.buttonBackgroundColor.BackColor = System.Drawing.SystemColors.ControlText;
+            this.buttonBackgroundColor.Location = new System.Drawing.Point(110, 15);
+            this.buttonBackgroundColor.Name = "buttonBackgroundColor";
+            this.buttonBackgroundColor.Size = new System.Drawing.Size(23, 23);
+            this.buttonBackgroundColor.TabIndex = 1;
+            this.buttonBackgroundColor.UseVisualStyleBackColor = false;
+            this.buttonBackgroundColor.Click += new System.EventHandler(this.buttonBackgroundColor_Click);
+            // 
+            // labelForeground
+            // 
+            this.labelForeground.AutoSize = true;
+            this.labelForeground.Location = new System.Drawing.Point(168, 20);
+            this.labelForeground.Name = "labelForeground";
+            this.labelForeground.Size = new System.Drawing.Size(88, 13);
+            this.labelForeground.TabIndex = 0;
+            this.labelForeground.Text = "Foreground Color";
             // 
             // TextAndSpaceCustomizationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(420, 444);
+            this.ClientSize = new System.Drawing.Size(420, 502);
+            this.Controls.Add(this.groupBoxColorSelect);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.createButton);
             this.Controls.Add(this.textEditGroupBox);
@@ -346,6 +402,8 @@
             this.heightFlowLayoutPanel.PerformLayout();
             this.textEditGroupBox.ResumeLayout(false);
             this.textEditGroupBox.PerformLayout();
+            this.groupBoxColorSelect.ResumeLayout(false);
+            this.groupBoxColorSelect.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -377,5 +435,10 @@
         private System.Windows.Forms.Button buttonFontSelect;
         private System.Windows.Forms.TextBox textBoxScalingFactor;
         private System.Windows.Forms.CheckBox checkBoxTextScale;
+        private System.Windows.Forms.GroupBox groupBoxColorSelect;
+        private System.Windows.Forms.Label labelBackgoundColor;
+        private System.Windows.Forms.Button buttonForegroundColor;
+        private System.Windows.Forms.Button buttonBackgroundColor;
+        private System.Windows.Forms.Label labelForeground;
     }
 }
