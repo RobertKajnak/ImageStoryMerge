@@ -14,8 +14,9 @@ namespace PhotoStoryMerge
     {
         bool isShiftPressed = false;
 
-        int heightPixelsCurrent = 0;
-        int widthPixelsCurrent = 0;
+        int heightPixelsCurrent;
+        int widthPixelsCurrent = 1920;
+        double heightTextMultiples = 1.0;
         double textScaleFactor = 20;
 
         public TextAndSpaceCustomizationForm()
@@ -25,14 +26,80 @@ namespace PhotoStoryMerge
             RotateButton(buttonFontSelect,RotateFlipType.Rotate90FlipNone);
             this.ActiveControl = textEditRichTextBox;
 
-            heightPixelsCurrent = (int) (textEditRichTextBox.Font.Size * textScaleFactor);
-            widthPixelsCurrent = (int) (textEditRichTextBox.Font.Size * textScaleFactor);
+            heightPixelsCurrent = (int) (textEditRichTextBox.Font.Size * textScaleFactor * heightTextMultiples);
+            heightTextMultipleTextBox.Text = heightTextMultiples.ToString();
+            heightPixelsTextBox.Text = heightPixelsCurrent.ToString();
+            //labelBackgoundColor.Text = heightPixelsTextBox.Text;
 
+            widthPixelsCurrent = (int) (textEditRichTextBox.Font.Size );
+            widthTextBox.Text = widthPixelsCurrent.ToString();
+            
             
 
         }
 
         #region Special
+        /// <summary>
+        /// This is intended as a sure-fire method for text changed, 
+        /// in case the contents of the text field are changed through non-keypress methods
+        /// </summary>
+        class ValidNumber
+        {
+            public double Value { get; private set; }
+            private string oldValue = "1";
+            private bool allowNegative = false;
+            private bool allowZero = false;
+            private bool allowDecimal = false;
+
+            public ValidNumber(string initialValue = "1", bool allowNegative = false, bool allowZero = false, bool allowDecimal = false)
+            {
+                this.oldValue = initialValue;
+                this.allowDecimal = allowDecimal;
+                this.allowZero = allowZero;
+                this.allowNegative = allowNegative;
+            }
+
+            public (string, double) Verify(string text)
+            {
+                try
+                {
+                    if (allowDecimal)
+                        Value = double.Parse(text);
+                    else
+                        Value = int.Parse(text);
+
+                    if (!allowNegative && Value < 0)
+                        throw new ArgumentOutOfRangeException("Value less than 0 not allowed");
+                    if (!allowZero && Value == 0)
+                        throw new ArgumentOutOfRangeException("Value == 0 not allowed");
+                    oldValue = text;
+                }
+                catch
+                {
+                    MessageBox.Show("Only " + (allowNegative ? "" : "positive ") +
+                                              (allowZero ? "" : "non-zero ") +
+                                              (allowDecimal ? "decimal " : "integer ") +
+                                              "values are allowed",
+                                              "Invalid text detected in width field");
+                    text = oldValue;
+                }
+                return (text, Value);
+            }
+
+            /// <summary>
+            /// Verifies value and casts it to int
+            /// </summary>
+            /// <param name="text"></param>
+            /// <returns></returns>
+            public (string, int) VerifyInt(string text)
+            {
+                string newString;
+                double retVal;
+                (newString, retVal) = this.Verify(text);
+                return (newString, (int)retVal);
+            }
+        }
+
         public void RotateButton(Button button, RotateFlipType rotation)
         {
             Bitmap img = GenerateBMPWithText(button.Height, button.Width, button.BackColor, button.Text, button.Font,button.ForeColor);
@@ -91,26 +158,8 @@ namespace PhotoStoryMerge
         #endregion
 
         #region Events
-        private void heightPixelsTextBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            FilterNonDigits(sender, e, allowDecimal:false);
-        }
-        #endregion
 
-        private void heightTextMultipleTextBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            FilterNonDigits(sender, e);
-        }
-
-        private void widthTextBox_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            FilterNonDigits(sender, e, allowDecimal:false);
-        }
-
-        private void textBoxScalingFactor_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            FilterNonDigits(sender, e);
-        }
+        #region Click Events
 
         private void createButton_Click(object sender, EventArgs e)
         {
@@ -123,8 +172,185 @@ namespace PhotoStoryMerge
             this.Close();
         }
 
+        private void buttonFontSelect_Click(object sender, EventArgs e)
+        {
+            FontDialog fontDlg = new FontDialog();
+            if (fontDlg.ShowDialog() != DialogResult.Cancel)
+            {
+                textEditRichTextBox.Font = fontDlg.Font;
+            }
+        }
+
+        private void buttonBackgroundColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                buttonBackgroundColor.BackColor = colorDialog.Color;
+            }
+        }
+
+        private void buttonForegroundColor_Click(object sender, EventArgs e)
+        {
+            ColorDialog colorDialog = new ColorDialog();
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                buttonForegroundColor.BackColor = colorDialog.Color;
+            }
+        }
+
+        #endregion
+
+        #region Change Events
+
+        #region Checked Changed
+        private void radioButtonCustomHeight_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as RadioButton).Checked)
+            {
+                heightTextMultipleTextBox.Enabled = true;
+            }
+            else
+            {
+                heightTextMultipleTextBox.Enabled = false;
+            }
+
+            groupRadioHeight_CheckedChanged(sender, e);
+        }
+
+        private void radioButtonTextHeightPixels_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as RadioButton).Checked)
+            {
+                heightPixelsTextBox.Enabled = true;
+            }
+            else
+            {
+                heightPixelsTextBox.Enabled = false;
+            }
+
+            groupRadioHeight_CheckedChanged(sender, e);
+        }
+
+        private void groupRadioHeight_CheckedChanged(object sender, EventArgs e)
+        {
+            ///Recursive Call?
+            heightPixelsTextBox.Text = heightPixelsCurrent.ToString();
+            heightTextMultipleTextBox.Text = (heightPixelsCurrent / (double)textEditRichTextBox.Font.Size / heightTextMultiples).ToString("0.00");
+        }
+
+        private void groupRadioWidth_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void radioButtonWidthCustom_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as RadioButton).Checked)
+            {
+                widthTextBox.Enabled = true;
+            }
+            else
+            {
+                widthTextBox.Enabled = false;
+            }
+
+            groupRadioWidth_CheckedChanged(sender, e);
+        }
+
+        private void radioButtonBlank_CheckedChanged(object sender, EventArgs e)
+        {
+            if ((sender as RadioButton).Checked)
+            {
+                textEditRichTextBox.Enabled = false;
+            }
+            else
+            {
+                textEditRichTextBox.Enabled = true;
+            }
+        }
+
+        private void checkBoxTextScale_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxTextScale.CheckState == CheckState.Checked)
+            {
+                textBoxScalingFactor.Enabled = true;
+            }
+            else
+            {
+                textBoxScalingFactor.Enabled = false;
+                textBoxScalingFactor.Text = "1.0";
+            }
+        }
+
+        private void radioButtonTextHeight2_CheckedChanged(object sender, EventArgs e)
+        {
+            groupRadioHeight_CheckedChanged(sender, e);
+        }
+
+        private void radioButtonTextHeight4_CheckedChanged(object sender, EventArgs e)
+        {
+            groupRadioHeight_CheckedChanged(sender, e);
+        }
+
+        #endregion
+
+        #region Text Changed
+        ValidNumber widthTextBoxValid = new ValidNumber();
+        private void widthTextBox_TextChanged(object sender, EventArgs e)
+        {
+            (widthTextBox.Text, widthPixelsCurrent) = widthTextBoxValid.VerifyInt(widthTextBox.Text);
+        }
+
+        ValidNumber HeightPixelsValid = new ValidNumber();
+        private void heightTextMultipleTextBox_TextChanged(object sender, EventArgs e)
+        {
+            /*(heightTextMultipleTextBox.Text, heightTextMultiples) = HeightPixelsValid.VerifyInt(heightTextMultipleTextBox.Text);
+            heightPixelsCurrent = (int)(textEditRichTextBox.Font.Size * textScaleFactor * heightTextMultiples);
+
+            groupRadioHeight_CheckedChanged(sender, e);*/
+        }
+
+        ValidNumber HeightMultiplesValid = new ValidNumber(allowDecimal: true);
+        private void heightPixelsTextBox_TextChanged(object sender, EventArgs e)
+        {
+            (heightPixelsTextBox.Text, heightPixelsCurrent) = HeightPixelsValid.VerifyInt(heightPixelsTextBox.Text);
+
+            groupRadioHeight_CheckedChanged(sender, e);
+        }
+
+        ValidNumber TextScaleFactorValid = new ValidNumber(allowDecimal: true);
+        private void textBoxScalingFactor_TextChanged(object sender, EventArgs e)
+        {
+            (textBoxScalingFactor.Text,textScaleFactor) = TextScaleFactorValid.Verify(textBoxScalingFactor.Text);
+            heightPixelsCurrent = (int)(textEditRichTextBox.Font.Size * textScaleFactor * heightTextMultiples);
+
+            groupRadioHeight_CheckedChanged(sender, e);
+        }
+        #endregion
+
+        #endregion
 
         #region Keyboard Events
+        private void heightPixelsTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            FilterNonDigits(sender, e, allowDecimal: false);
+        }
+
+        private void heightTextMultipleTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            FilterNonDigits(sender, e);
+        }
+
+        private void widthTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            FilterNonDigits(sender, e, allowDecimal: false);
+        }
+
+        private void textBoxScalingFactor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            FilterNonDigits(sender, e);
+        }
 
         private void TextAndSpaceCustomizationForm_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -138,7 +364,6 @@ namespace PhotoStoryMerge
             }
         }
         
-
         private void TextAndSpaceCustomizationForm_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -166,200 +391,6 @@ namespace PhotoStoryMerge
 
         #endregion
 
-
-        private void radioButtonCustomHeight_CheckedChanged(object sender, EventArgs e)
-        {
-            if ((sender as RadioButton).Checked)
-            {
-                heightTextMultipleTextBox.Enabled = true;
-            }
-            else
-            {
-                heightTextMultipleTextBox.Enabled = false;
-            }
-            groupRadioHeight_CheckedChanged(sender, e);
-        }
-
-        private void radioButtonTextHeightPixels_CheckedChanged(object sender, EventArgs e)
-        {
-            if ((sender as RadioButton).Checked)
-            {
-                heightPixelsTextBox.Enabled = true;
-            }
-            else
-            {
-                heightPixelsTextBox.Enabled = false;
-            }
-
-            groupRadioHeight_CheckedChanged(sender, e);
-        }
-
-
-        /// <summary>
-        /// This is intended as a sure-fire method for text changed, 
-        /// in case the contents of the text field are changed through non-keypress methods
-        /// 
-        /// </summary>
-        /*class ValidNumber
-        {
-            int valueInt;
-            double valueDouble;
-            bool allowNegative = false;
-            bool allowZero = false;
-            bool allowDecimal = false;
-
-            public ValidNumber(bool allowNegative = false, bool allowZero = false, bool allowDecimal = false)
-            {
-                this.allowDecimal = allowDecimal;
-                this.allowZero = allowZero;
-                this.allowNegative = allowNegative;
-            }
-
-            private (string, int) verifyInt(string text)
-            {
-                
-            }
-
-            private string verifyDouble(string text)
-            {
-
-            }
-        }*/
-
-        /*private string ValidateText(string textField, string oldValue, ref double validatedValue,
-         bool allowNegative = false, bool allowZero = false)
-        {
-
-        }*/
-        /*private string ValidateText(ref string textField, string oldValue,ref double validatedValue, 
-                 bool allowNegative = false, bool allowZero = false)
-        {
-            try
-            {
-                validatedValue = int.Parse(textField);
-                if (!allowNegative && validatedValue < 0)
-                    throw new ArgumentOutOfRangeException("Value less than 0 not allowed");
-                if (!allowZero && validatedValue == 0)
-                    throw new ArgumentOutOfRangeException("Value == 0 not allowed");
-                oldValue = textField;
-            }
-            catch
-            {
-                MessageBox.Show("Only positive integer values are allowed", "Invalid text detected in width field");
-                textField = widthTextBoxPreviousText;
-            }
-            return textField;
-        }
-
-        (string, int) widthTextBoxPreviousText = "";*/
-        private void widthTextBox_TextChanged(object sender, EventArgs e)
-        {
-            //widthTextBox.Text = ValidateText(ref widthTextBox.Text, widthTextBoxPreviousText, ref widthPixelsCurrent);
-
-            
-        }
-
-        private void groupRadioHeight_CheckedChanged(object sender, EventArgs e)
-        {
-            heightPixelsTextBox.Text = heightPixelsCurrent.ToString();
-            heightTextMultipleTextBox.Text = (heightPixelsCurrent / (double)textEditRichTextBox.Font.Size).ToString();
-
-        }
-
-        private void groupRadioWeight_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void radioButtonWidthCustom_CheckedChanged(object sender, EventArgs e)
-        {
-            if ((sender as RadioButton).Checked)
-            {
-                widthTextBox.Enabled = true;
-            }
-            else
-            {
-                widthTextBox.Enabled = false;
-            }
-
-            groupRadioWeight_CheckedChanged(sender, e);
-        }
-
-        private void radioButtonBlank_CheckedChanged(object sender, EventArgs e)
-        {
-            if ((sender as RadioButton).Checked)
-            {
-                textEditRichTextBox.Enabled = false;
-            }
-            else
-            {
-                textEditRichTextBox.Enabled = true;
-            }
-        }
-
-        private void buttonFontSelect_Click(object sender, EventArgs e)
-        {
-            FontDialog fontDlg = new FontDialog();
-            if (fontDlg.ShowDialog() != DialogResult.Cancel)
-            {
-                textEditRichTextBox.Font = fontDlg.Font;
-            }
-        }
-
-        private void checkBoxTextScale_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxTextScale.CheckState == CheckState.Checked)
-            {
-                textBoxScalingFactor.Enabled = true;
-            }
-            else
-            {
-                textBoxScalingFactor.Enabled = false;
-                textBoxScalingFactor.Text = "1.0";
-            }
-        }
-
-        private void radioButtonTextHeight2_CheckedChanged(object sender, EventArgs e)
-        {
-            groupRadioHeight_CheckedChanged(sender, e);
-        }
-
-        private void radioButtonTextHeight4_CheckedChanged(object sender, EventArgs e)
-        {
-            groupRadioHeight_CheckedChanged(sender, e);
-        }
-
-        private void heightTextMultipleTextBox_TextChanged(object sender, EventArgs e)
-        {
-            //heightPixelsCurrent = 
-        }
-
-        private void heightPixelsTextBox_TextChanged(object sender, EventArgs e)
-        { 
-            //heightPixelsCurrent = 
-        }
-
-        private void textBoxScalingFactor_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void buttonBackgroundColor_Click(object sender, EventArgs e)
-        {
-            ColorDialog colorDialog = new ColorDialog(); 
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                buttonBackgroundColor.BackColor = colorDialog.Color;
-            }
-        }
-
-        private void buttonForegroundColor_Click(object sender, EventArgs e)
-        {
-            ColorDialog colorDialog = new ColorDialog();
-            if (colorDialog.ShowDialog() == DialogResult.OK)
-            {
-                buttonForegroundColor.BackColor = colorDialog.Color;
-            }
-        }
+        #endregion
     }
 }
